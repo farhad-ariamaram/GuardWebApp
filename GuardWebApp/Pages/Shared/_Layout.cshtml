@@ -45,9 +45,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-page="/Logout">خروج</a>
-                    </li>
                 </ul>
                     }
 
@@ -61,9 +58,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted fixedButton">
         <div class="container">
-            &copy; 2021 - GuardWebApp
+            @await RenderSectionAsync("BottomPanel", required: false)
         </div>
     </footer>
 

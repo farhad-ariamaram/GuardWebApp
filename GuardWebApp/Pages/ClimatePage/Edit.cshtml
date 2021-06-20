@@ -5,9 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Climate</h4>
+<h4>ویرایش آب و هوا</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,19 +13,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Climate.Id" />
             <div class="form-group">
-                <label asp-for="Climate.Name" class="control-label"></label>
+                <label class="control-label">نام آب و هوا</label>
                 <input asp-for="Climate.Name" class="form-control" />
                 <span asp-validation-for="Climate.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="ثبت" class="btn btn-primary m-2" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
 </div>
 
 @section Scripts {

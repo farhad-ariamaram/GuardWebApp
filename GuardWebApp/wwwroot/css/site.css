@@ -71,3 +71,10 @@ body {
 }
 
 /*----------------------------------------------------------*/
+.fixedButton {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 775;
+    width: 100%;
+}
