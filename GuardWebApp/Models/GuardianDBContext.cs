@@ -342,6 +342,8 @@ namespace GuardWebApp.Models
             {
                 entity.ToTable("User");
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(3000);
