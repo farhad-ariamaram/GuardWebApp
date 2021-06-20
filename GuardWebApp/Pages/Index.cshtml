@@ -4,7 +4,27 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <div class="text-center">
+            <h1 class="display-4">ورود به سیستم</h1>
+            <br />
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">نام کاربری</label>
+                    <input asp-for="User.Username" type="text" class="form-control">
+                    <span class="text-danger" asp-validation-for="User.Username"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">رمز ورود</label>
+                    <input type="password" asp-for="User.Password" class="form-control">
+                    <span class="text-danger" asp-validation-for="User.Password"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">ورود</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-4"></div>
 </div>
+
