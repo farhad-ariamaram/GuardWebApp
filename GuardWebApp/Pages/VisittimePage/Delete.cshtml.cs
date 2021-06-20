@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
-using Microsoft.AspNetCore.Http;
 
-namespace GuardWebApp.Pages.ClimatePage
+namespace GuardWebApp.Pages.VisittimePage
 {
     public class DeleteModel : PageModel
     {
@@ -20,24 +19,18 @@ namespace GuardWebApp.Pages.ClimatePage
         }
 
         [BindProperty]
-        public Climate Climate { get; set; }
+        public Visittime Visittime { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
-            var uid = HttpContext.Session.GetString("uid");
-            if (uid == null)
-            {
-                return RedirectToPage("../Index");
-            }
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            Climate = await _context.Climates.FirstOrDefaultAsync(m => m.Id == id);
+            Visittime = await _context.Visittimes.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Climate == null)
+            if (Visittime == null)
             {
                 return NotFound();
             }
@@ -51,11 +44,11 @@ namespace GuardWebApp.Pages.ClimatePage
                 return NotFound();
             }
 
-            Climate = await _context.Climates.FindAsync(id);
+            Visittime = await _context.Visittimes.FindAsync(id);
 
-            if (Climate != null)
+            if (Visittime != null)
             {
-                _context.Climates.Remove(Climate);
+                _context.Visittimes.Remove(Visittime);
                 await _context.SaveChangesAsync();
             }
 

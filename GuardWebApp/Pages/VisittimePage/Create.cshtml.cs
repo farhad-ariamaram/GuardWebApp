@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
-using Microsoft.AspNetCore.Http;
 
-namespace GuardWebApp.Pages.ClimatePage
+namespace GuardWebApp.Pages.VisittimePage
 {
     public class CreateModel : PageModel
     {
@@ -21,17 +20,11 @@ namespace GuardWebApp.Pages.ClimatePage
 
         public IActionResult OnGet()
         {
-            var uid = HttpContext.Session.GetString("uid");
-            if (uid == null)
-            {
-                return RedirectToPage("../Index");
-            }
-
             return Page();
         }
 
         [BindProperty]
-        public Climate Climate { get; set; }
+        public Visittime Visittime { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -40,7 +33,10 @@ namespace GuardWebApp.Pages.ClimatePage
                 return Page();
             }
 
-            _context.Climates.Add(Climate);
+            Visittime.StartDate = new DateTime(2000, int.Parse(Request.Form["startdatemonth"].ToString()), int.Parse(Request.Form["startdateday"].ToString()));
+            Visittime.EndDate = new DateTime(2000, int.Parse(Request.Form["enddatemonth"].ToString()), int.Parse(Request.Form["enddateday"].ToString()));
+
+            _context.Visittimes.Add(Visittime);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

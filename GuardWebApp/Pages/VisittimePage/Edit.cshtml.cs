@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
-using Microsoft.AspNetCore.Http;
 
-namespace GuardWebApp.Pages.ClimatePage
+namespace GuardWebApp.Pages.VisittimePage
 {
     public class EditModel : PageModel
     {
@@ -21,24 +20,18 @@ namespace GuardWebApp.Pages.ClimatePage
         }
 
         [BindProperty]
-        public Climate Climate { get; set; }
+        public Visittime Visittime { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
-            var uid = HttpContext.Session.GetString("uid");
-            if (uid == null)
-            {
-                return RedirectToPage("../Index");
-            }
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            Climate = await _context.Climates.FirstOrDefaultAsync(m => m.Id == id);
+            Visittime = await _context.Visittimes.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Climate == null)
+            if (Visittime == null)
             {
                 return NotFound();
             }
@@ -54,7 +47,7 @@ namespace GuardWebApp.Pages.ClimatePage
                 return Page();
             }
 
-            _context.Attach(Climate).State = EntityState.Modified;
+            _context.Attach(Visittime).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +55,7 @@ namespace GuardWebApp.Pages.ClimatePage
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClimateExists(Climate.Id))
+                if (!VisittimeExists(Visittime.Id))
                 {
                     return NotFound();
                 }
@@ -75,9 +68,9 @@ namespace GuardWebApp.Pages.ClimatePage
             return RedirectToPage("./Index");
         }
 
-        private bool ClimateExists(long id)
+        private bool VisittimeExists(long id)
         {
-            return _context.Climates.Any(e => e.Id == id);
+            return _context.Visittimes.Any(e => e.Id == id);
         }
     }
 }

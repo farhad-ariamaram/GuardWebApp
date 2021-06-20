@@ -1,0 +1,58 @@
+﻿@page
+@model GuardWebApp.Pages.VisittimePage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>ویرایش زمان بازدید</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">عنوان</label>
+                <input asp-for="Visittime.Title" class="form-control" />
+                <span asp-validation-for="Visittime.Title" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Visittime.Id" />
+            <div class="form-group">
+                <label class="control-label">تاریخ شروع</label>
+                <input asp-for="Visittime.StartDate" class="form-control" />
+                <span asp-validation-for="Visittime.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ پایان</label>
+                <input asp-for="Visittime.EndDate" class="form-control" />
+                <span asp-validation-for="Visittime.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">زمان شروع</label>
+                <input type="time" asp-for="Visittime.StartTime" class="form-control" />
+                <span asp-validation-for="Visittime.StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">زمان پایان</label>
+                <input type="time" asp-for="Visittime.EndTime" class="form-control" />
+                <span asp-validation-for="Visittime.EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات</label>
+                <input asp-for="Visittime.Description" class="form-control" />
+                <span asp-validation-for="Visittime.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section BottomPanel {
+    <a class="btn btn-danger rounded-circle" asp-page="../Panel"><i class="fa fa-arrow-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
