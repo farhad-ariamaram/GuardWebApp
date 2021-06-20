@@ -38,12 +38,30 @@ namespace GuardWebApp.Pages.VisittimePage
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                return Page();
+            }
+
+            try
+            {
+                Visittime.StartDate = new DateTime(2000, int.Parse(Request.Form["startdatemonth"].ToString()), int.Parse(Request.Form["startdateday"].ToString()));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("WrongStartDate", "فرمت وارد شده اشتباه است");
+                return Page();
+            }
+
+            try
+            {
+                Visittime.EndDate = new DateTime(2000, int.Parse(Request.Form["enddatemonth"].ToString()), int.Parse(Request.Form["enddateday"].ToString()));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("WrongEndDate", "فرمت وارد شده اشتباه است");
                 return Page();
             }
 

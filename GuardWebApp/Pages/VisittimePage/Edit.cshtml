@@ -17,6 +17,36 @@
                 <span asp-validation-for="Visittime.Title" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Visittime.Id" />
+
+
+            <div class="form-group">
+                <label class="control-label">تاریخ شروع</label>
+                <div class="text-danger">@Html.ValidationMessage("WrongStartDate")</div>
+                <div class="row">
+                    <div class="col-6">
+                        <span>روز</span>
+                        <input type="number" name="startdateday" class="form-control" value="@Model.Visittime.StartDate.Day" />
+                    </div>
+                    <div class="col-6">
+                        <span>ماه</span>
+                        <input type="number" name="startdatemonth" class="form-control" value="@Model.Visittime.StartDate.Month" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ پایان</label>
+                <div class="text-danger">@Html.ValidationMessage("WrongEndDate")</div>
+                <div class="row">
+                    <div class="col-6">
+                        <span>روز</span>
+                        <input type="number" name="enddateday" class="form-control" value="@Model.Visittime.EndDate.Day" />
+                    </div>
+                    <div class="col-6">
+                        <span>ماه</span>
+                        <input type="number" name="enddatemonth" class="form-control" value="@Model.Visittime.EndDate.Month" />
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="control-label">تاریخ شروع</label>
                 <input asp-for="Visittime.StartDate" class="form-control" />

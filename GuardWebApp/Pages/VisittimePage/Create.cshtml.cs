@@ -33,8 +33,25 @@ namespace GuardWebApp.Pages.VisittimePage
                 return Page();
             }
 
-            Visittime.StartDate = new DateTime(2000, int.Parse(Request.Form["startdatemonth"].ToString()), int.Parse(Request.Form["startdateday"].ToString()));
-            Visittime.EndDate = new DateTime(2000, int.Parse(Request.Form["enddatemonth"].ToString()), int.Parse(Request.Form["enddateday"].ToString()));
+            try
+            {
+                Visittime.StartDate = new DateTime(2000, int.Parse(Request.Form["startdatemonth"].ToString()), int.Parse(Request.Form["startdateday"].ToString()));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("WrongStartDate", "فرمت وارد شده اشتباه است");
+                return Page();
+            }
+
+            try
+            {
+                Visittime.EndDate = new DateTime(2000, int.Parse(Request.Form["enddatemonth"].ToString()), int.Parse(Request.Form["enddateday"].ToString()));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("WrongEndDate", "فرمت وارد شده اشتباه است");
+                return Page();
+            }
 
             _context.Visittimes.Add(Visittime);
             await _context.SaveChangesAsync();
