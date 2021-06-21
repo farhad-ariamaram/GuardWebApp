@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
+using GuardWebApp.ViewModels;
 
 namespace GuardWebApp.Pages.CheckLocationPage
 {
@@ -19,6 +20,9 @@ namespace GuardWebApp.Pages.CheckLocationPage
         }
 
         public long locationIdProp { get; set; }
+
+        [BindProperty]
+        public MultiSelectionVM multiSelection { get; set; }
 
         public IActionResult OnGet(long? locationId)
         {
@@ -34,6 +38,12 @@ namespace GuardWebApp.Pages.CheckLocationPage
             }
 
             locationIdProp = locationId.Value;
+
+            multiSelection = new MultiSelectionVM
+            {
+                SelectedIds = new int[] { },
+                Items = _context.Visittimes.Select(a=> new SelectListItem { Value = a.Id.ToString() , Text = a.Title })
+            };
 
             ViewData["CheckId"] = new SelectList(_context.Checks, "Id", "Name");
             ViewData["ClimateId"] = new SelectList(_context.Climates, "Id", "Name");
@@ -51,6 +61,12 @@ namespace GuardWebApp.Pages.CheckLocationPage
             }
 
             _context.CheckLocations.Add(CheckLocation);
+            await _context.SaveChangesAsync();
+
+            foreach (var item in multiSelection.SelectedIds)
+            {
+                _context.CheckLocationVisittimes.Add(new CheckLocationVisittime() { VisittimeId = item , CheckLocationId = CheckLocation.Id });
+            }
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index", new { locationId = CheckLocation.LocationId });

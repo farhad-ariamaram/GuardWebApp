@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GuardWebApp</title>
-    <link href="~/lib/Bootstrap5RTL/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="~/lib/Bootstrap4RTL/dist/css/bootstrap-rtl.css" rel="stylesheet" />
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-multiselect2/bootstrap-multiselect.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -28,25 +29,25 @@
                     }
                     else
                     {
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-page="/Index">صفحه اصلی</a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                تعاریف
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" asp-page="/VisittimePage/Index">زمان بازدید</a></li>
-                                <li><a class="dropdown-item" asp-page="/LocationPage/Index">مکان</a></li>
-                                <li><a class="dropdown-item" asp-page="/ClimatePage/Index">آب و هوا</a></li>
-                                <li><a class="dropdown-item" asp-page="/CheckPage/Index">بررسی</a></li>
-                                <li><a class="dropdown-item" asp-page="/GuardAreaPage/Index">محل گشت</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Index">صفحه اصلی</a>
+                            </li>
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        تعاریف
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" asp-page="/VisittimePage/Index">زمان بازدید</a>
+                                        <a class="dropdown-item" asp-page="/LocationPage/Index">مکان</a>
+                                        <a class="dropdown-item" asp-page="/ClimatePage/Index">آب و هوا</a>
+                                        <a class="dropdown-item" asp-page="/CheckPage/Index">بررسی</a>
+                                        <a class="dropdown-item" asp-page="/GuardAreaPage/Index">محل گشت</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     }
 
                 </div>
@@ -66,8 +67,9 @@
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/Bootstrap5RTL/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/Bootstrap4RTL/dist/js/bootstrap.bundle.js"></script>
     <script src="~/lib/font-awesome/js/all.js"></script>
+    <script src="~/lib/bootstrap-multiselect2/bootstrap-multiselect.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
