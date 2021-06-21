@@ -1,4 +1,12 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿function quitBox() {
+	if (navigator.userAgent.indexOf("Firefox") != -1 || navigator.userAgent.indexOf("Chrome") != -1) {
+		open(location, '_self').close();
+		window.location.href = "about:blank";
+		window.close();
+	} else {
+		window.opener = null;
+		window.open("", "_self");
+		window.close();
+		open(location, '_self').close();
+	}  
+}

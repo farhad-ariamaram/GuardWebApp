@@ -1,0 +1,51 @@
+﻿@page
+@model GuardWebApp.Pages.CheckLocationPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>از حذف مورد زیر مطمئن هستید؟</h3>
+<br />
+<div>
+    <h4>بررسی مکان</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            توضیحات بررسی مکان
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CheckLocation.Description)
+        </dd>
+        <dt class="col-sm-2">
+            بررسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CheckLocation.Check.Name)
+        </dd>
+        <dt class="col-sm-2">
+            آب و هوا
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CheckLocation.Climate.Name)
+        </dd>
+        <dt class="col-sm-2">
+            مکان
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CheckLocation.Location.Name)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="CheckLocation.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a class="btn btn-outline-dark" asp-page="./Index" asp-route-locationId="@Model.CheckLocation.LocationId">انصراف</a>
+    </form>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="./Index" asp-route-locationId="@Model.CheckLocation.LocationId"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>

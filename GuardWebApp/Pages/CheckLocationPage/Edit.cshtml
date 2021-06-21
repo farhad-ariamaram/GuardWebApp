@@ -1,0 +1,46 @@
+﻿@page
+@model GuardWebApp.Pages.CheckLocationPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>ویرایش بررسی مکان</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="CheckLocation.LocationId" type="hidden" value="@Model.CheckLocation.LocationId" />
+            <input type="hidden" asp-for="CheckLocation.Id" />
+            <div class="form-group">
+                <label class="control-label">بررسی</label>
+                <select asp-for="CheckLocation.CheckId" class="form-control" asp-items="ViewBag.CheckId"></select>
+                <span asp-validation-for="CheckLocation.CheckId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">آب و هوا</label>
+                <select asp-for="CheckLocation.ClimateId" class="form-control" asp-items="ViewBag.ClimateId"></select>
+                <span asp-validation-for="CheckLocation.ClimateId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات بررسی مکان</label>
+                <input asp-for="CheckLocation.Description" class="form-control" />
+                <span asp-validation-for="CheckLocation.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index" asp-route-locationId="@Model.CheckLocation.LocationId"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
