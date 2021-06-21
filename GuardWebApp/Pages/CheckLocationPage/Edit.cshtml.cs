@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
+using GuardWebApp.ViewModels;
 
 namespace GuardWebApp.Pages.CheckLocationPage
 {
@@ -21,6 +22,9 @@ namespace GuardWebApp.Pages.CheckLocationPage
 
         [BindProperty]
         public CheckLocation CheckLocation { get; set; }
+
+        [BindProperty]
+        public MultiSelectionVM multiSelection { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
@@ -39,13 +43,19 @@ namespace GuardWebApp.Pages.CheckLocationPage
                 return NotFound();
             }
 
+            multiSelection = new MultiSelectionVM
+            {
+                SelectedIds = await _context.CheckLocationVisittimes.Where(a => a.CheckLocationId == id).Select(b => b.VisittimeId).ToArrayAsync(),
+                Items = _context.Visittimes.Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Title })
+            };
+
             ViewData["CheckId"] = new SelectList(_context.Checks, "Id", "Name");
             ViewData["ClimateId"] = new SelectList(_context.Climates, "Id", "Name");
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -56,7 +66,7 @@ namespace GuardWebApp.Pages.CheckLocationPage
 
             try
             {
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -69,6 +79,27 @@ namespace GuardWebApp.Pages.CheckLocationPage
                     throw;
                 }
             }
+
+            try
+            {
+                var foo = _context.CheckLocationVisittimes.Where(a => a.CheckLocationId == CheckLocation.Id);
+                foreach (var item in foo)
+                {
+                    _context.Remove(item);
+                }
+                _context.SaveChanges();
+
+                foreach (var item in multiSelection.SelectedIds)
+                {
+                    _context.CheckLocationVisittimes.Add(new CheckLocationVisittime() { CheckLocationId = CheckLocation.Id, VisittimeId = item });
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+            
 
             return RedirectToPage("./Index", new { locationId = CheckLocation.LocationId });
         }

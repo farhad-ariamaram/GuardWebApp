@@ -8,7 +8,7 @@ namespace GuardWebApp.ViewModels
 {
     public class MultiSelectionVM
     {
-        public int[] SelectedIds { get; set; }
+        public long[] SelectedIds { get; set; }
         public IEnumerable<SelectListItem> Items { get; set; }
     }
 }

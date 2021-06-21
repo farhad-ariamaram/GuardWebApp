@@ -41,7 +41,7 @@ namespace GuardWebApp.Pages.CheckLocationPage
 
             multiSelection = new MultiSelectionVM
             {
-                SelectedIds = new int[] { },
+                SelectedIds = new long[] { },
                 Items = _context.Visittimes.Select(a=> new SelectListItem { Value = a.Id.ToString() , Text = a.Title })
             };
 
@@ -63,11 +63,19 @@ namespace GuardWebApp.Pages.CheckLocationPage
             _context.CheckLocations.Add(CheckLocation);
             await _context.SaveChangesAsync();
 
-            foreach (var item in multiSelection.SelectedIds)
+            try
             {
-                _context.CheckLocationVisittimes.Add(new CheckLocationVisittime() { VisittimeId = item , CheckLocationId = CheckLocation.Id });
+                foreach (var item in multiSelection.SelectedIds)
+                {
+                    _context.CheckLocationVisittimes.Add(new CheckLocationVisittime() { VisittimeId = item, CheckLocationId = CheckLocation.Id });
+                }
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+
+            }
+            
 
             return RedirectToPage("./Index", new { locationId = CheckLocation.LocationId });
         }
