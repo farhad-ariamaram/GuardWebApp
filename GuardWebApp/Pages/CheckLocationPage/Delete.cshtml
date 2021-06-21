@@ -35,6 +35,16 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CheckLocation.Location.Name)
         </dd>
+        <dt class="col-sm-2">
+            زمان (های) بازدید
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var visittime in Model.CheckLocation.CheckLocationVisittimes)
+            {
+                @Html.DisplayFor(a => visittime.Visittime.Title)
+                <br />
+            }
+        </dd>
     </dl>
 
     <form method="post">

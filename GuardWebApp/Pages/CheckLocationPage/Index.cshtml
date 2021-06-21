@@ -27,6 +27,9 @@
                 <th>
                     مکان
                 </th>
+                <th>
+                    زمان (های) بازدید
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -46,6 +49,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Location.Name)
                     </td>
+                    <th>
+                        @foreach (var visittime in item.CheckLocationVisittimes)
+                        {
+                            @Html.DisplayFor(a => visittime.Visittime.Title)
+                            <br />
+                        }
+                    </th>
                     <td>
                         <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
                         <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>

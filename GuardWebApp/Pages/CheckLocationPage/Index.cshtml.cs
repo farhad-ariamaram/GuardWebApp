@@ -41,7 +41,8 @@ namespace GuardWebApp.Pages.CheckLocationPage
                 .Where(a => a.LocationId == locationId)
                 .Include(c => c.Check)
                 .Include(c => c.Climate)
-                .Include(c => c.Location).ToListAsync();
+                .Include(c => c.Location)
+                .Include(c => c.CheckLocationVisittimes).ThenInclude(a=>a.Visittime).ToListAsync();
 
             return Page();
         }

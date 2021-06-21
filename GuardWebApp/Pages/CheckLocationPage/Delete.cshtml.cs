@@ -31,7 +31,8 @@ namespace GuardWebApp.Pages.CheckLocationPage
             CheckLocation = await _context.CheckLocations
                 .Include(c => c.Check)
                 .Include(c => c.Climate)
-                .Include(c => c.Location).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(c => c.Location)
+                .Include(c => c.CheckLocationVisittimes).ThenInclude(a => a.Visittime).FirstOrDefaultAsync(m => m.Id == id);
 
             if (CheckLocation == null)
             {
