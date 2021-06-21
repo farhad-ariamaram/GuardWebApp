@@ -1,0 +1,48 @@
+﻿@page
+@model GuardWebApp.Pages.LocationPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>افزودن مکان جدید</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">نام مکان</label>
+                <input asp-for="Location.Name" class="form-control" />
+                <span asp-validation-for="Location.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">مقدار QR</label>
+                <input asp-for="Location.Qr" class="form-control" />
+                <span asp-validation-for="Location.Qr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">مقدار NFC</label>
+                <input asp-for="Location.Nfc" class="form-control" />
+                <span asp-validation-for="Location.Nfc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">محل گشت</label>
+                <select asp-for="Location.GuardAreaId" class ="form-control" asp-items="ViewBag.GuardAreaId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

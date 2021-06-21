@@ -1,0 +1,51 @@
+﻿@page
+@model GuardWebApp.Pages.LocationPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>از حذف مورد زیر مطمئن هستید؟</h3>
+<br />
+<div>
+    <h4>مکان</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            نام مکان 
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location.Name)
+        </dd>
+        <dt class="col-sm-2">
+            مقدار QR
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location.Qr)
+        </dd>
+        <dt class="col-sm-2">
+            مقدار NFC
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location.Nfc)
+        </dd>
+        <dt class="col-sm-2">
+            محل گشت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location.GuardArea.Description)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Location.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a class="btn btn-outline-dark" asp-page="./Index">انصراف</a>
+    </form>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
