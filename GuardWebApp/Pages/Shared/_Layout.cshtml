@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GuardWebApp</title>
     <link href="~/lib/Bootstrap4RTL/dist/css/bootstrap-rtl.css" rel="stylesheet" />
-    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-multiselect2/bootstrap-multiselect.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -39,16 +39,16 @@
                                         تعاریف
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" asp-page="/VisittimePage/Index">زمان بازدید</a>
-                                        <a class="dropdown-item" asp-page="/LocationPage/Index">مکان</a>
-                                        <a class="dropdown-item" asp-page="/ClimatePage/Index">آب و هوا</a>
-                                        <a class="dropdown-item" asp-page="/CheckPage/Index">بررسی</a>
-                                        <a class="dropdown-item" asp-page="/GuardAreaPage/Index">محل گشت</a>
-                                        <a class="dropdown-item" asp-page="/RhythmPage/Index">ریتم</a>
-                                        <a class="dropdown-item" asp-page="/RhythmDetailPage/Index">جزئیات ریتم</a>
-                                        <a class="dropdown-item" asp-page="/ShiftPage/Index">شیفت</a>
-                                        <a class="dropdown-item" asp-page="/ShiftAllocationPage/Index">تخصیص شیفت</a>
-                                        <a class="dropdown-item" asp-page="/PlanPage/Index">برنامه</a>
+                                        <a class="dropdown-item" asp-page="/VisittimePage/Index"><i class="far fa-clock">&nbsp;</i>زمان بازدید</a>
+                                        <a class="dropdown-item" asp-page="/LocationPage/Index"><i class="far fa-map-marker">&nbsp;</i>مکان</a>
+                                        <a class="dropdown-item" asp-page="/ClimatePage/Index"><i class="far fa-cloud-moon-rain">&nbsp;</i>آب و هوا</a>
+                                        <a class="dropdown-item" asp-page="/CheckPage/Index"><i class="far fa-check">&nbsp;</i>بررسی</a>
+                                        <a class="dropdown-item" asp-page="/GuardAreaPage/Index"><i class="far fa-map">&nbsp;</i>محل گشت</a>
+                                        <a class="dropdown-item" asp-page="/RhythmPage/Index"><i class="far fa-calendar">&nbsp;</i>ریتم</a>
+                                        <a class="dropdown-item" asp-page="/RhythmDetailPage/Index"><i class="far fa-calendar-alt">&nbsp;</i>جزئیات ریتم</a>
+                                        <a class="dropdown-item" asp-page="/ShiftPage/Index"><i class="	far fa-calendar-check">&nbsp;</i>شیفت</a>
+                                        <a class="dropdown-item" asp-page="/ShiftAllocationPage/Index"><i class="far fa-clipboard">&nbsp;</i>تخصیص شیفت</a>
+                                        <a class="dropdown-item" asp-page="/PlanPage/Index"><i class="far fa-flag-checkered">&nbsp;</i>برنامه</a>
                                     </div>
                                 </div>
                             </li>
@@ -73,7 +73,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/Bootstrap4RTL/dist/js/bootstrap.bundle.js"></script>
-    <script src="~/lib/font-awesome/js/all.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
     <script src="~/lib/bootstrap-multiselect2/bootstrap-multiselect.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
