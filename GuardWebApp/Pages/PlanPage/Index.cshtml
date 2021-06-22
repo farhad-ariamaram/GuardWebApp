@@ -1,0 +1,62 @@
+﻿@page
+@model GuardWebApp.Pages.PlanPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>جدول برنامه ها</h1>
+
+<p>
+    <a class="btn btn-success" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    تاریخ
+                </th>
+                <th>
+                    مکان
+                </th>
+                <th>
+                    شیفت
+                </th>
+                <th>
+                    نگهبان
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Plan)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Shift.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.Name)
+                    </td>
+                    <td>
+                        <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section BottomPanel {
+    <a class="btn btn-danger rounded-circle" asp-page="../Panel"><i class="fa fa-arrow-left"></i></a>
+}
+
