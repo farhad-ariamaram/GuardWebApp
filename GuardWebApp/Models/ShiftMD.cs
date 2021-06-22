@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace GuardWebApp.Models
 {
-    public class RhythmMD
+    public class ShiftMD
     {
         [Required(ErrorMessage = "این فیلد اجباری است")]
-        public DateTime DateTime { get; set; }
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "طول این فیلد حداقل 2 و حداکثر 50 کاراکتر می‌باشد")]
+        public string Title { get; set; }
     }
 
-    [ModelMetadataType(typeof(RhythmMD))]
-    public partial class Rhythm
+    [ModelMetadataType(typeof(ShiftMD))]
+    public partial class Shift
     {
     }
 }
