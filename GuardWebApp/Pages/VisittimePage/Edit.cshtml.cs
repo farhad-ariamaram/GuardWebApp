@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardWebApp.Pages.VisittimePage
 {
@@ -24,6 +25,12 @@ namespace GuardWebApp.Pages.VisittimePage
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
             if (id == null)
             {
                 return NotFound();

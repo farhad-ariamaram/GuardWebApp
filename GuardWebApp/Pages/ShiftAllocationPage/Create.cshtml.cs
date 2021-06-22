@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardWebApp.Pages.ShiftAllocationPage
 {
@@ -20,15 +21,20 @@ namespace GuardWebApp.Pages.ShiftAllocationPage
 
         public IActionResult OnGet()
         {
-        ViewData["GuardAreaId"] = new SelectList(_context.GuardAreas, "Id", "Description");
-        ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            ViewData["GuardAreaId"] = new SelectList(_context.GuardAreas, "Id", "Description");
+            ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
             return Page();
         }
 
         [BindProperty]
         public ShiftAllocation ShiftAllocation { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

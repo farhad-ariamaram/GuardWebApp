@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardWebApp.Pages.ShiftAllocationPage
 {
@@ -20,11 +21,19 @@ namespace GuardWebApp.Pages.ShiftAllocationPage
 
         public IList<ShiftAllocation> ShiftAllocation { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
             ShiftAllocation = await _context.ShiftAllocations
                 .Include(s => s.GuardArea)
                 .Include(s => s.Rhythm).ToListAsync();
+
+            return Page();
         }
     }
 }

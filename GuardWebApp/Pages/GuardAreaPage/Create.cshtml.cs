@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardWebApp.Pages.GuardAreaPage
 {
@@ -20,13 +21,18 @@ namespace GuardWebApp.Pages.GuardAreaPage
 
         public IActionResult OnGet()
         {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
             return Page();
         }
 
         [BindProperty]
         public GuardArea GuardArea { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

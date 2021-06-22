@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardWebApp.Pages.LocationPage
 {
@@ -20,14 +21,19 @@ namespace GuardWebApp.Pages.LocationPage
 
         public IActionResult OnGet()
         {
-        ViewData["GuardAreaId"] = new SelectList(_context.GuardAreas, "Id", "Description");
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            ViewData["GuardAreaId"] = new SelectList(_context.GuardAreas, "Id", "Description");
             return Page();
         }
 
         [BindProperty]
         public Location Location { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

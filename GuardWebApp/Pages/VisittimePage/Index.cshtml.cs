@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GuardWebApp.Pages.VisittimePage
 {
@@ -17,9 +19,17 @@ namespace GuardWebApp.Pages.VisittimePage
 
         public IList<Visittime> Visittime { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
             Visittime = await _context.Visittimes.ToListAsync();
+
+            return Page();
         }
     }
 }

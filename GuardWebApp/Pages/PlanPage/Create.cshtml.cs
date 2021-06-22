@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardWebApp.Pages.PlanPage
 {
@@ -20,16 +21,21 @@ namespace GuardWebApp.Pages.PlanPage
 
         public IActionResult OnGet()
         {
-        ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
-        ViewData["ShiftId"] = new SelectList(_context.Shifts, "Id", "Id");
-        ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
+            ViewData["ShiftId"] = new SelectList(_context.Shifts, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return Page();
         }
 
         [BindProperty]
         public Plan Plan { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
