@@ -1,0 +1,45 @@
+﻿@page
+@model GuardWebApp.Pages.ShiftAllocationPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>از حذف مورد زیر مطمئن هستید؟</h3>
+<br />
+<div>
+    <h4>تخصیص شیفت</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            تاریخ
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShiftAllocation.DateTime)
+        </dd>
+        <dt class="col-sm-2">
+            محل گشت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShiftAllocation.GuardArea.Description)
+        </dd>
+        <dt class="col-sm-2">
+            ریتم
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShiftAllocation.Rhythm.Title)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="ShiftAllocation.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" /> 
+        <a class="btn btn-outline-dark" asp-page="./Index">انصراف</a>
+    </form>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>

@@ -1,0 +1,42 @@
+﻿@page
+@model GuardWebApp.Pages.ShiftAllocationPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>تخصیص شیفت جدید</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">محل گشت</label>
+                <select asp-for="ShiftAllocation.GuardAreaId" class ="form-control" asp-items="ViewBag.GuardAreaId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">ریتم</label>
+                <select asp-for="ShiftAllocation.RhythmId" class ="form-control" asp-items="ViewBag.RhythmId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ</label>
+                <input asp-for="ShiftAllocation.DateTime" class="form-control" />
+                <span asp-validation-for="ShiftAllocation.DateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
