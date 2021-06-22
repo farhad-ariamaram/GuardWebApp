@@ -1,0 +1,47 @@
+﻿@page
+@model GuardWebApp.Pages.RhythmDetailPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>ایجاد جزئیات ریتم</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">ریتم</label>
+                <select asp-for="RhythmDetail.RhythmId" class ="form-control" asp-items="ViewBag.RhythmId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">مکان</label>
+                <select asp-for="RhythmDetail.LocationId" class ="form-control" asp-items="ViewBag.LocationId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">شماره ترتیب</label>
+                <input asp-for="RhythmDetail.OrderNo" class="form-control" />
+                <span asp-validation-for="RhythmDetail.OrderNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">زمان</label>
+                <input asp-for="RhythmDetail.Time" class="form-control" />
+                <span asp-validation-for="RhythmDetail.Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
