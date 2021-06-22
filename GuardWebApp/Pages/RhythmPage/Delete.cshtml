@@ -1,0 +1,39 @@
+﻿@page
+@model GuardWebApp.Pages.RhythmPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>از حذف مورد زیر مطمئن هستید؟</h3>
+<br />
+<div>
+    <h4>ریتم</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            عنوان ریتم
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Rhythm.Title)
+        </dd>
+        <dt class="col-sm-2">
+            محل گشت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Rhythm.GuardArea.Description)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Rhythm.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a class="btn btn-outline-dark" asp-page="./Index">انصراف</a>
+    </form>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
