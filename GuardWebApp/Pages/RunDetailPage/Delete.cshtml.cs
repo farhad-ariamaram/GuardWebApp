@@ -37,7 +37,8 @@ namespace GuardWebApp.Pages.RunDetailPage
 
             RunDetail = await _context.RunDetails
                 .Include(r => r.LocationDetail)
-                .Include(r => r.Run).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(r => r.Run)
+                .Include(r => r.RunStatus).FirstOrDefaultAsync(m => m.Id == id);
 
             if (RunDetail == null)
             {

@@ -38,7 +38,8 @@ namespace GuardWebApp.Pages.RunDetailPage
 
             RunDetail = await _context.RunDetails
                 .Include(r => r.LocationDetail)
-                .Include(r => r.Run).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(r => r.Run)
+                .Include(r => r.RunStatus).FirstOrDefaultAsync(m => m.Id == id);
 
             if (RunDetail == null)
             {
@@ -46,6 +47,7 @@ namespace GuardWebApp.Pages.RunDetailPage
             }
            ViewData["LocationDetailId"] = new SelectList(_context.LocationDetails, "Id", "Id");
            ViewData["RunId"] = new SelectList(_context.Runs, "Id", "Id");
+           ViewData["RunStatusId"] = new SelectList(_context.RunStatuses, "Id", "Name");
             return Page();
         }
 

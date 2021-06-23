@@ -8,7 +8,7 @@
 <h3>از حذف مورد زیر مطمئن هستید؟</h3>
 <br />
 <div>
-    <h4>RunDetail</h4>
+    <h4>جزئیات اجرا</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -23,11 +23,17 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.RunDetail.Run.Id)
         </dd>
+        <dt class="col-sm-2">
+            وضعیت اجرا
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RunDetail.RunStatus.Name)
+        </dd>
     </dl>
 
     <form method="post">
         <input type="hidden" asp-for="RunDetail.Id" />
-        <input type="submit" value="حذف" class="btn btn-danger" />
+        <input type="submit" value="حذف" class="btn btn-danger" /> |
         <a class="btn btn-outline-dark" asp-page="./Index">انصراف</a>
     </form>
 </div>

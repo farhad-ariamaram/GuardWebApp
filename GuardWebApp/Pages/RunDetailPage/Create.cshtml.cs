@@ -29,6 +29,7 @@ namespace GuardWebApp.Pages.RunDetailPage
 
             ViewData["LocationDetailId"] = new SelectList(_context.LocationDetails, "Id", "Id");
             ViewData["RunId"] = new SelectList(_context.Runs, "Id", "Id");
+            ViewData["RunStatusId"] = new SelectList(_context.RunStatuses, "Id", "Name");
             return Page();
         }
 

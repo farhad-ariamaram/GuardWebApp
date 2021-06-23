@@ -25,6 +25,7 @@ namespace GuardWebApp.Pages.RunPage
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
+
             var uid = HttpContext.Session.GetString("uid");
             if (uid == null)
             {
@@ -40,6 +41,7 @@ namespace GuardWebApp.Pages.RunPage
                 .Include(r => r.Approver)
                 .Include(r => r.Plan)
                 .Include(r => r.Status)
+                .Include(r => r.SubmittedLocation)
                 .Include(r => r.User).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Run == null)
@@ -49,6 +51,7 @@ namespace GuardWebApp.Pages.RunPage
            ViewData["ApproverId"] = new SelectList(_context.Users, "Id", "Name");
            ViewData["PlanId"] = new SelectList(_context.Plans, "Id", "Id");
            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name");
+           ViewData["SubmittedLocationId"] = new SelectList(_context.SubmittedLocations, "Id", "Id");
            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return Page();
         }

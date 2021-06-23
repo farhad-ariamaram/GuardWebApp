@@ -31,7 +31,8 @@ namespace GuardWebApp.Pages.RunDetailPage
 
             RunDetail = await _context.RunDetails
                 .Include(r => r.LocationDetail)
-                .Include(r => r.Run).ToListAsync();
+                .Include(r => r.Run)
+                .Include(r => r.RunStatus).ToListAsync();
 
             return Page();
         }

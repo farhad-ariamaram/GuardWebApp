@@ -33,6 +33,7 @@ namespace GuardWebApp.Pages.RunPage
                 .Include(r => r.Approver)
                 .Include(r => r.Plan)
                 .Include(r => r.Status)
+                .Include(r => r.SubmittedLocation)
                 .Include(r => r.User).ToListAsync();
 
             return Page();

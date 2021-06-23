@@ -5,6 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
+
 <h4>ویرایش جزئیات اجرا</h4>
 <hr />
 <div class="row">
@@ -16,6 +17,11 @@
                 <label class="control-label">اجرا</label>
                 <select asp-for="RunDetail.RunId" class="form-control" asp-items="ViewBag.RunId"></select>
                 <span asp-validation-for="RunDetail.RunId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">وضعیت اجرا</label>
+                <select asp-for="RunDetail.RunStatusId" class="form-control" asp-items="ViewBag.RunStatusId"></select>
+                <span asp-validation-for="RunDetail.RunStatusId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">جزئیات مکان</label>

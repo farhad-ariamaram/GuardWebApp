@@ -21,6 +21,9 @@
                 <th>
                     اجرا
                 </th>
+                <th>
+                    وضعیت اجرا
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -35,6 +38,9 @@
                         @Html.DisplayFor(modelItem => item.Run.Id)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.RunStatus.Name)
+                    </td>
+                    <td>
                         <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
                         <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
                     </td>
@@ -47,4 +53,3 @@
 @section BottomPanel {
     <a class="btn btn-danger rounded-circle" asp-page="../Panel"><i class="fa fa-arrow-left"></i></a>
 }
-
