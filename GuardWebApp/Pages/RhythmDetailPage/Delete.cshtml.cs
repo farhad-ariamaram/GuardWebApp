@@ -61,7 +61,7 @@ namespace GuardWebApp.Pages.RhythmDetailPage
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { rhythmId = RhythmDetail.RhythmId });
         }
     }
 }

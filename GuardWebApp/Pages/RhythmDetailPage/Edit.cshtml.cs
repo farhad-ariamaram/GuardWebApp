@@ -74,7 +74,7 @@ namespace GuardWebApp.Pages.RhythmDetailPage
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { rhythmId = RhythmDetail.RhythmId });
         }
 
         private bool RhythmDetailExists(long id)

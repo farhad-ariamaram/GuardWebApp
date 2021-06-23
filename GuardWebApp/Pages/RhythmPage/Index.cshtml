@@ -21,24 +21,30 @@
                 <th>
                     محل گشت
                 </th>
+                <th>
+                    جزئیات ریتم
+                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.Rhythm)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GuardArea.Description)
-                    </td>
-                    <td>
-                        <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
-                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GuardArea.Description)
+                </td>
+                <td>
+                    <a target="_blank" class="btn btn-primary text-white" asp-page="../RhythmDetailPage/Index" asp-route-rhythmId="@item.Id"><i class="fa fa-plus"></i>&nbsp;<i class="fa fa-edit"></i>&nbsp;<i class="fa fa-trash"></i></a>
+                </td>
+                <td>
+                    <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

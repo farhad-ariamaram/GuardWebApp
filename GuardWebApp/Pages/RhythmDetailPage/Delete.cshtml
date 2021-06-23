@@ -40,12 +40,12 @@
     <form method="post">
         <input type="hidden" asp-for="RhythmDetail.Id" />
         <input type="submit" value="حذف" class="btn btn-danger" />
-        <a class="btn btn-outline-dark" asp-page="./Index">انصراف</a>
+        <a class="btn btn-outline-dark" asp-page="./Index" asp-route-rhythmId="@Model.RhythmDetail.RhythmId">انصراف</a>
     </form>
 </div>
 
 <div>
     @section BottomPanel {
-        <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-left"></i></a>
+        <a class="btn btn-danger rounded-circle" asp-page="./Index" asp-route-rhythmId="@Model.RhythmDetail.RhythmId"><i class="fa fa-arrow-left"></i></a>
     }
 </div>

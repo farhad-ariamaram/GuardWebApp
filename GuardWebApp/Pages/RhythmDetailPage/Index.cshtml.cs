@@ -21,7 +21,9 @@ namespace GuardWebApp.Pages.RhythmDetailPage
 
         public IList<RhythmDetail> RhythmDetail { get;set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public long rhythmIdProp { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(long? rhythmId)
         {
             var uid = HttpContext.Session.GetString("uid");
             if (uid == null)
@@ -29,7 +31,21 @@ namespace GuardWebApp.Pages.RhythmDetailPage
                 return RedirectToPage("../Index");
             }
 
+            if (!rhythmId.HasValue)
+            {
+                return RedirectToPage("../404");
+            }
+
+            var location = await _context.Rhythms.FindAsync(rhythmId);
+            if (location == null)
+            {
+                return RedirectToPage("../404");
+            }
+
+            rhythmIdProp = rhythmId.Value;
+
             RhythmDetail = await _context.RhythmDetails
+                .Where(a => a.RhythmId == rhythmId)
                 .Include(r => r.Location)
                 .Include(r => r.Rhythm).ToListAsync();
 

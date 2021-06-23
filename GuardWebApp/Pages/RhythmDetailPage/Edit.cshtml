@@ -11,12 +11,8 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="RhythmDetail.RhythmId" type="hidden" value="@Model.RhythmDetail.RhythmId" />
             <input type="hidden" asp-for="RhythmDetail.Id" />
-            <div class="form-group">
-                <label class="control-label">ریتم</label>
-                <select asp-for="RhythmDetail.RhythmId" class="form-control" asp-items="ViewBag.RhythmId"></select>
-                <span asp-validation-for="RhythmDetail.RhythmId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label class="control-label">مکان</label>
                 <select asp-for="RhythmDetail.LocationId" class="form-control" asp-items="ViewBag.LocationId"></select>
@@ -41,7 +37,7 @@
 
 <div>
     @section BottomPanel {
-        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+        <a class="btn btn-danger rounded-circle" asp-page="Index" asp-route-rhythmId="@Model.RhythmDetail.RhythmId"><i class="fa fa-arrow-left"></i></a>
     }
 </div>
 

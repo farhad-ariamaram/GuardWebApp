@@ -8,7 +8,7 @@
 <h1>جزئیات ریتم ها</h1>
 
 <p>
-    <a class="btn btn-success" asp-page="Create"><i class="fa fa-plus"></i></a>
+    <a class="btn btn-success" asp-page="Create" asp-route-rhythmId="@Model.rhythmIdProp"><i class="fa fa-plus"></i></a>
 </p>
 
 <div class="table-responsive">
@@ -57,5 +57,5 @@
 </div>
 
 @section BottomPanel {
-    <a class="btn btn-danger rounded-circle" asp-page="../Panel"><i class="fa fa-arrow-left"></i></a>
+    <a class="btn btn-danger rounded-circle" href="#" onclick="quitBox();"><i class="fa fa-times"></i></a>
 }

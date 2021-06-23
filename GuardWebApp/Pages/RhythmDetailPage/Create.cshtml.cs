@@ -19,13 +19,28 @@ namespace GuardWebApp.Pages.RhythmDetailPage
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public long rhythmIdProp { get; set; }
+
+        public IActionResult OnGet(long? rhythmId)
         {
             var uid = HttpContext.Session.GetString("uid");
             if (uid == null)
             {
                 return RedirectToPage("../Index");
             }
+
+            if (!rhythmId.HasValue)
+            {
+                return RedirectToPage("../404");
+            }
+
+            var location = _context.Locations.Find(rhythmId);
+            if (location == null)
+            {
+                return RedirectToPage("../404");
+            }
+
+            rhythmIdProp = rhythmId.Value;
 
             ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
             ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
@@ -45,7 +60,7 @@ namespace GuardWebApp.Pages.RhythmDetailPage
             _context.RhythmDetails.Add(RhythmDetail);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new {rhythmId = RhythmDetail.RhythmId });
         }
     }
 }
