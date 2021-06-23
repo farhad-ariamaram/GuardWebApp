@@ -7,6 +7,11 @@ namespace GuardWebApp.Models
 {
     public partial class SubmittedLocation
     {
+        public SubmittedLocation()
+        {
+            Runs = new HashSet<Run>();
+        }
+
         public long Id { get; set; }
         public long LocationId { get; set; }
         public long UserId { get; set; }
@@ -16,5 +21,6 @@ namespace GuardWebApp.Models
         public virtual Device Device { get; set; }
         public virtual Location Location { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Run> Runs { get; set; }
     }
 }

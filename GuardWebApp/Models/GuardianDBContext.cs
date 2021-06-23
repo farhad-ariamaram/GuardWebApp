@@ -30,6 +30,7 @@ namespace GuardWebApp.Models
         public virtual DbSet<RhythmDetail> RhythmDetails { get; set; }
         public virtual DbSet<Run> Runs { get; set; }
         public virtual DbSet<RunDetail> RunDetails { get; set; }
+        public virtual DbSet<RunStatus> RunStatuses { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
         public virtual DbSet<ShiftAllocation> ShiftAllocations { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
@@ -45,6 +46,7 @@ namespace GuardWebApp.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=.;Database=GuardianDB;Trusted_Connection=True;");
             }
         }
@@ -248,6 +250,11 @@ namespace GuardWebApp.Models
                     .HasForeignKey(d => d.StatusId)
                     .HasConstraintName("FK_Run_Status");
 
+                entity.HasOne(d => d.SubmittedLocation)
+                    .WithMany(p => p.Runs)
+                    .HasForeignKey(d => d.SubmittedLocationId)
+                    .HasConstraintName("FK_Run_SubmittedLocation");
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.RunUsers)
                     .HasForeignKey(d => d.UserId)
@@ -269,6 +276,21 @@ namespace GuardWebApp.Models
                     .WithMany(p => p.RunDetails)
                     .HasForeignKey(d => d.RunId)
                     .HasConstraintName("FK_RunDetail_Run");
+
+                entity.HasOne(d => d.RunStatus)
+                    .WithMany(p => p.RunDetails)
+                    .HasForeignKey(d => d.RunStatusId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_RunDetail_RunStatus");
+            });
+
+            modelBuilder.Entity<RunStatus>(entity =>
+            {
+                entity.ToTable("RunStatus");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Shift>(entity =>
