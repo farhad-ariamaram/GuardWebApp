@@ -1,0 +1,37 @@
+﻿@page
+@model GuardWebApp.Pages.RunDetailPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>جزئیات اجرا جدید</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">اجرا</label>
+                <select asp-for="RunDetail.RunId" class ="form-control" asp-items="ViewBag.RunId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">جزئیات مکان</label>
+                <select asp-for="RunDetail.LocationDetailId" class ="form-control" asp-items="ViewBag.LocationDetailId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

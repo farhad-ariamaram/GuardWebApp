@@ -1,0 +1,45 @@
+﻿@page
+@model GuardWebApp.Pages.RunPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>ایجاد اجرا جدید</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">برنامه</label>
+                <select asp-for="Run.PlanId" class ="form-control" asp-items="ViewBag.PlanId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">نگهبان</label>
+                <select asp-for="Run.UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تایید کننده</label>
+                <select asp-for="Run.ApproverId" class ="form-control" asp-items="ViewBag.ApproverId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">وضعیت</label>
+                <select asp-for="Run.StatusId" class ="form-control" asp-items="ViewBag.StatusId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

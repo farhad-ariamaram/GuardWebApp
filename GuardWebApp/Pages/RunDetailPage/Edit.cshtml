@@ -1,0 +1,40 @@
+﻿@page
+@model GuardWebApp.Pages.RunDetailPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>ویرایش جزئیات اجرا</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RunDetail.Id" />
+            <div class="form-group">
+                <label class="control-label">اجرا</label>
+                <select asp-for="RunDetail.RunId" class="form-control" asp-items="ViewBag.RunId"></select>
+                <span asp-validation-for="RunDetail.RunId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">جزئیات مکان</label>
+                <select asp-for="RunDetail.LocationDetailId" class="form-control" asp-items="ViewBag.LocationDetailId"></select>
+                <span asp-validation-for="RunDetail.LocationDetailId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
