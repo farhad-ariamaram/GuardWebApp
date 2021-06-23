@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
 using GuardWebApp.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardWebApp.Pages.CheckLocationPage
 {
@@ -26,6 +27,12 @@ namespace GuardWebApp.Pages.CheckLocationPage
 
         public IActionResult OnGet(long? locationId)
         {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
             if (!locationId.HasValue)
             {
                 return RedirectToPage("../404");

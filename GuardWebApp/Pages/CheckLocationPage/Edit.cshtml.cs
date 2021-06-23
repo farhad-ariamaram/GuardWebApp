@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
 using GuardWebApp.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardWebApp.Pages.CheckLocationPage
 {
@@ -28,6 +29,12 @@ namespace GuardWebApp.Pages.CheckLocationPage
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
             if (id == null)
             {
                 return NotFound();
