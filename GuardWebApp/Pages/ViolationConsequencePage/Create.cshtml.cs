@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
 
-namespace GuardWebApp.Pages.ViolationNaturePage
+namespace GuardWebApp.Pages.ViolationConsequencePage
 {
     public class CreateModel : PageModel
     {
@@ -27,11 +27,12 @@ namespace GuardWebApp.Pages.ViolationNaturePage
                 return RedirectToPage("../Index");
             }
 
+            ViewData["ViolationTypeId"] = new SelectList(_context.ViolationTypes, "Id", "Name");
             return Page();
         }
 
         [BindProperty]
-        public ViolationNature ViolationNature { get; set; }
+        public ViolationConsequence ViolationConsequence { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -40,7 +41,7 @@ namespace GuardWebApp.Pages.ViolationNaturePage
                 return Page();
             }
 
-            _context.ViolationNatures.Add(ViolationNature);
+            _context.ViolationConsequences.Add(ViolationConsequence);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
