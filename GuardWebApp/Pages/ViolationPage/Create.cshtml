@@ -1,0 +1,68 @@
+﻿@page
+@model GuardWebApp.Pages.ViolationPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>افزودن تخلف جدید</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">نگهبان</label>
+                <select asp-for="Violation.UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">نوع تخلف</label>
+                <select asp-for="Violation.ViolationTypeId" class ="form-control" asp-items="ViewBag.ViolationTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات</label>
+                <input asp-for="Violation.Description" class="form-control" />
+                <span asp-validation-for="Violation.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">ثبت کننده</label>
+                <select asp-for="Violation.RegistrarId" class ="form-control" asp-items="ViewBag.RegistrarId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تایید کننده</label>
+                <select asp-for="Violation.ApproverId" class ="form-control" asp-items="ViewBag.ApproverId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">وضعیت</label>
+                <select asp-for="Violation.StatusId" class ="form-control" asp-items="ViewBag.StatusId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ تایید</label>
+                <input asp-for="Violation.ApproveDate" class="form-control" />
+                <span asp-validation-for="Violation.ApproveDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ ثبت</label>
+                <input asp-for="Violation.RegisterDate" class="form-control" />
+                <span asp-validation-for="Violation.RegisterDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">اجرا</label>
+                <select asp-for="Violation.RunId" class ="form-control" asp-items="ViewBag.RunId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
