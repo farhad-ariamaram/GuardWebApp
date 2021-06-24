@@ -29,46 +29,49 @@
                     }
                     else
                     {
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Index">صفحه اصلی</a>
-                            </li>
-                            <li class="nav-item">
-                                <div class="dropdown">
-                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        تعاریف
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" asp-page="/LocationPage/Index"><i class="far fa-map-marker"></i>&nbsp;مکان</a>
-                                        <a class="dropdown-item" asp-page="/LocationDetailPage/Index"><i class="far fa-directions"></i>&nbsp;جزئیات مکان</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-page="/RunPage/Index"><i class="far fa-play-circle"></i>&nbsp;اجرا</a>
-                                        <a class="dropdown-item" asp-page="/RunDetailPage/Index"><i class="far fa-arrows-alt"></i>&nbsp;جزئیات اجرا</a>
-                                        <a class="dropdown-item" asp-page="/RunStatusPage/Index"><i class="far fa-caret-square-down"></i>&nbsp;وضعیت اجرا</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-page="/ShiftPage/Index"><i class="	far fa-calendar-check"></i>&nbsp;شیفت</a>
-                                        <a class="dropdown-item" asp-page="/ShiftAllocationPage/Index"><i class="far fa-clipboard"></i>&nbsp;تخصیص شیفت</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-page="/RhythmPage/Index"><i class="far fa-calendar"></i>&nbsp;ریتم</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-page="/VisittimePage/Index"><i class="far fa-clock"></i>&nbsp;زمان بازدید</a>
-                                        <a class="dropdown-item" asp-page="/ClimatePage/Index"><i class="far fa-cloud-moon-rain"></i>&nbsp;آب و هوا</a>
-                                        <a class="dropdown-item" asp-page="/CheckPage/Index"><i class="far fa-check"></i>&nbsp;بررسی</a>
-                                        <a class="dropdown-item" asp-page="/GuardAreaPage/Index"><i class="far fa-map"></i>&nbsp;محل گشت</a>
-                                        <a class="dropdown-item" asp-page="/PlanPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;برنامه</a>
-                                        <a class="dropdown-item" asp-page="/StatusPage/Index"><i class="far fa-exclamation-circle"></i>&nbsp;وضعیت</a>
-                                        <a class="dropdown-item" asp-page="/SubmittedLocationPage/Index"><i class="far fa-crosshairs"></i>&nbsp;مکان های بررسی شده</a>
-                                        <a class="dropdown-item" asp-page="/DevicePage/Index"><i class="far fa-mobile"></i>&nbsp;دستگاه ها</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-page="/ViolationPage/Index"><i class="far fa-exclamation-triangle"></i>&nbsp;تخلفات</a>
-                                        <a class="dropdown-item" asp-page="/ViolationTypePage/Index"><i class="far fa-ticket"></i>&nbsp;نوع تخلف</a>
-                                        <a class="dropdown-item" asp-page="/ViolationNaturePage/Index"><i class="far fa-paragraph"></i>&nbsp;ماهیت تخلف</a>
-                                        <a class="dropdown-item" asp-page="/ViolationConsequencePage/Index"><i class="far fa-hard-hat"></i>&nbsp;پیامد تخلف</a>
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-page="/Index">صفحه اصلی</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-page="/ScanPage/Index">اسکن بارکد</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                تعاریف
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-page="/LocationPage/Index"><i class="far fa-map-marker"></i>&nbsp;مکان</a>
+                                <a class="dropdown-item" asp-page="/LocationDetailPage/Index"><i class="far fa-directions"></i>&nbsp;جزئیات مکان</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-page="/RunPage/Index"><i class="far fa-play-circle"></i>&nbsp;اجرا</a>
+                                <a class="dropdown-item" asp-page="/RunDetailPage/Index"><i class="far fa-arrows-alt"></i>&nbsp;جزئیات اجرا</a>
+                                <a class="dropdown-item" asp-page="/RunStatusPage/Index"><i class="far fa-caret-square-down"></i>&nbsp;وضعیت اجرا</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-page="/ShiftPage/Index"><i class="	far fa-calendar-check"></i>&nbsp;شیفت</a>
+                                <a class="dropdown-item" asp-page="/ShiftAllocationPage/Index"><i class="far fa-clipboard"></i>&nbsp;تخصیص شیفت</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-page="/RhythmPage/Index"><i class="far fa-calendar"></i>&nbsp;ریتم</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-page="/VisittimePage/Index"><i class="far fa-clock"></i>&nbsp;زمان بازدید</a>
+                                <a class="dropdown-item" asp-page="/ClimatePage/Index"><i class="far fa-cloud-moon-rain"></i>&nbsp;آب و هوا</a>
+                                <a class="dropdown-item" asp-page="/CheckPage/Index"><i class="far fa-check"></i>&nbsp;بررسی</a>
+                                <a class="dropdown-item" asp-page="/GuardAreaPage/Index"><i class="far fa-map"></i>&nbsp;محل گشت</a>
+                                <a class="dropdown-item" asp-page="/PlanPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;برنامه</a>
+                                <a class="dropdown-item" asp-page="/StatusPage/Index"><i class="far fa-exclamation-circle"></i>&nbsp;وضعیت</a>
+                                <a class="dropdown-item" asp-page="/SubmittedLocationPage/Index"><i class="far fa-crosshairs"></i>&nbsp;مکان های بررسی شده</a>
+                                <a class="dropdown-item" asp-page="/DevicePage/Index"><i class="far fa-mobile"></i>&nbsp;دستگاه ها</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-page="/ViolationPage/Index"><i class="far fa-exclamation-triangle"></i>&nbsp;تخلفات</a>
+                                <a class="dropdown-item" asp-page="/ViolationTypePage/Index"><i class="far fa-ticket"></i>&nbsp;نوع تخلف</a>
+                                <a class="dropdown-item" asp-page="/ViolationNaturePage/Index"><i class="far fa-paragraph"></i>&nbsp;ماهیت تخلف</a>
+                                <a class="dropdown-item" asp-page="/ViolationConsequencePage/Index"><i class="far fa-hard-hat"></i>&nbsp;پیامد تخلف</a>
 
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
                     }
 
                 </div>

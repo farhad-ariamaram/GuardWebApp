@@ -1,0 +1,42 @@
+﻿@page
+@model GuardWebApp.Pages.ScanPage.IndexModel
+@{
+}
+
+<div class="row">
+    <div class="col-12 text-center">
+        <a class="btn btn-primary" onclick="startScanning()">اسکن بارکد</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div id="reader" width="600px"></div>
+    </div>
+</div>
+
+<form method="post" id="myform">
+    <input asp-for="@Model.QRVal" type="hidden" id="QRValue" />
+</form>
+
+
+<script src="~/lib/html5-qr-scanner/html5-qrcode.min.js"></script>
+
+<script>
+    const html5QrCode = new Html5Qrcode(
+        "reader", { formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE] });
+
+    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+        document.getElementById("QRValue").value = decodedText;
+        html5QrCode.stop();
+        $("#reader").hide();
+        document.getElementById("myform").submit();
+    };
+
+    const config = { fps: 10, qrbox: 250 };
+
+    function startScanning() {
+        $("#reader").show();
+        html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+    }
+</script>
