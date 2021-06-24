@@ -19,6 +19,12 @@
     <input asp-for="@Model.QRVal" type="hidden" id="QRValue" />
 </form>
 
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="../Panel"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
 
 <script src="~/lib/html5-qr-scanner/html5-qrcode.min.js"></script>
 
