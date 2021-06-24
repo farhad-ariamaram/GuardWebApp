@@ -1,0 +1,43 @@
+﻿@page
+@model GuardWebApp.Pages.DevicePage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>جدول دستگاه ها</h1>
+
+<p>
+    <a class="btn btn-success" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    نام دستگاه
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Device)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section BottomPanel {
+    <a class="btn btn-danger rounded-circle" asp-page="../Panel"><i class="fa fa-arrow-left"></i></a>
+}
