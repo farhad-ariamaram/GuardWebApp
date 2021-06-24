@@ -21,23 +21,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @if (@HttpContextAccessor.HttpContext.Session.GetString("uid") == null)
                     {
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-page="/Index">صفحه اصلی</a>
-                            </li>
-                        </ul>
                     }
                     else
                     {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link" asp-page="/Index">صفحه اصلی</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-page="/ScanPage/Index">اسکن بارکد</a>
+                                <a class="btn btn-light" asp-page="/ScanPage/Index">اسکن بارکد</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="btn btn-light dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     تعاریف
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -75,13 +67,14 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted fixedButton">
+    <footer class="footer text-muted fixedButton">
         <div class="container">
             @await RenderSectionAsync("BottomPanel", required: false)
         </div>
