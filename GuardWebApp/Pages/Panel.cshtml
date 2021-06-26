@@ -4,12 +4,12 @@
 }
 
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-md-4 col-xl-3">
             <div class="card bg-c-blue order-card">
                 <div class="card-block">
                     <h6 class="m-b-20"></h6>
-                    <h2 class="text-right"><i class="fas fa-scanner f-left"></i><span>اسکن بارکد</span></h2>
+                    <a class="simple" asp-page="/ScanPage/Index"><h2 class="text-right"><i class="fas fa-scanner f-left"></i><span>اسکن بارکد</span></h2></a>
                     <p class="m-b-0"><span class="f-right"></span></p>
                 </div>
             </div>
@@ -19,17 +19,7 @@
             <div class="card bg-c-green order-card">
                 <div class="card-block">
                     <h6 class="m-b-20"></h6>
-                    <h2 class="text-right"><i class="fa fa-info f-left"></i><span>تعاریف</span></h2>
-                    <p class="m-b-0"><span class="f-right"></span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-xl-3">
-            <div class="card bg-c-yellow order-card">
-                <div class="card-block">
-                    <h6 class="m-b-20"></h6>
-                    <h2 class="text-right"><i class="fa fa-user f-left"></i><span>پنل کاربری</span></h2>
+                    <a class="simple" asp-page="/Definations"><h2 class="text-right"><i class="fa fa-info f-left"></i><span>تعاریف</span></h2></a>
                     <p class="m-b-0"><span class="f-right"></span></p>
                 </div>
             </div>
@@ -39,7 +29,7 @@
             <div class="card bg-c-pink order-card">
                 <div class="card-block">
                     <h6 class="m-b-20"></h6>
-                    <h2 class="text-right"><i class="fa fa-sign-out f-left"></i><span>خروج</span></h2>
+                    <a class="simple" asp-page="./Logout"><h2 class="text-right"><i class="fa fa-sign-out f-left"></i><span>خروج</span></h2></a>
                     <p class="m-b-0"><span class="f-right"></span></p>
                 </div>
             </div>

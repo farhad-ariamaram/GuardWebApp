@@ -131,3 +131,13 @@ body {
 .f-right {
     float: right;
 }
+
+.simple {
+    color: white;
+    text-decoration: none !important;
+}
+
+    .simple :hover {
+        color: white;
+        text-decoration: none !important;
+    }
