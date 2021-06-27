@@ -10,6 +10,9 @@ namespace GuardWebApp.Pages.Planning
     {
         private readonly GuardianDBContext _context;
 
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
+
         public IndexModel(GuardianDBContext context)
         {
             _context = context;
@@ -22,8 +25,26 @@ namespace GuardWebApp.Pages.Planning
             return Page();
         }
 
-        public IActionResult OnPostDate(DateTime sDate, DateTime eDate)
+        public IActionResult OnPostDate(string sDate, string eDate, string timetype)
         {
+            switch (timetype)
+            {
+                case "tofrom":
+                    startDate = Convert.ToDateTime(sDate);
+                    endDate = Convert.ToDateTime(eDate);
+                    break;
+                case "daily":
+                    startDate = Convert.ToDateTime(sDate);
+                    endDate = startDate;
+                    break;
+                case "monthly":
+                    startDate = new DateTime(2000,int.Parse(sDate),1);
+                    endDate = new DateTime(2000, int.Parse(sDate), DateTime.DaysInMonth(2000, int.Parse(sDate)));
+                    break;
+                default:
+                    break;
+            }
+
             ViewData["step2"] = true;
             ViewData["GuardsId"] = new SelectList(_context.Users, "Id", "Name");
             return Page();
