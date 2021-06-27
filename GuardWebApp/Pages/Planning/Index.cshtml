@@ -60,7 +60,7 @@
             return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerDay;
         }
 
-        
+
     </script>
 
     <div id="tofrom" style="display:block">
@@ -116,11 +116,19 @@
 }
 else if (ViewData["Step2"] != null)
 {
-<div class="alert alert-success">
-    تاریخ انتخابی:
-    از: <div class="form-control">@Model.startDate</div>
-    تا: <div class="form-control">@Model.endDate</div>
-</div>
+    <div class="alert alert-success">
+        تاریخ انتخابی:
+        از: <div class="form-control">@Model.startDate</div>
+        تا: <div class="form-control">@Model.endDate</div>
+    </div>
+
+    <div class="alert alert-primary">
+        @foreach (DateTime day in Utils.EachDay(Model.startDate, Model.endDate))
+        {
+            @day.ToString(); <br />
+        }
+    </div>
+
     <form asp-page-handler="Guards" method="post">
         <label>نگهبانان:</label>
         <select name="guardId" class="form-control" asp-items="ViewBag.GuardsId"></select>
