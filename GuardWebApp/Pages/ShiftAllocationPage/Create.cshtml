@@ -13,11 +13,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">محل گشت</label>
-                <select asp-for="ShiftAllocation.GuardAreaId" class ="form-control" asp-items="ViewBag.GuardAreaId"></select>
+                <select asp-for="ShiftAllocation.GuardAreaId" class="form-control" asp-items="ViewBag.GuardAreaId"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">ریتم</label>
-                <select asp-for="ShiftAllocation.RhythmId" class ="form-control" asp-items="ViewBag.RhythmId"></select>
+                <select asp-for="ShiftAllocation.RhythmId" class="form-control" asp-items="ViewBag.RhythmId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">نگهبان</label>
+                <select asp-for="ShiftAllocation.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">تاریخ</label>

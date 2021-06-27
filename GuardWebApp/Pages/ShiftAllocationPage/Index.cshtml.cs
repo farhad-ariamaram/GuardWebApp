@@ -29,7 +29,8 @@ namespace GuardWebApp.Pages.ShiftAllocationPage
 
             ShiftAllocation = await _context.ShiftAllocations
                 .Include(s => s.GuardArea)
-                .Include(s => s.Rhythm).ToListAsync();
+                .Include(s => s.Rhythm)
+                .Include(s => s.User).ToListAsync();
 
             return Page();
         }

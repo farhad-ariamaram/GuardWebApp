@@ -36,7 +36,8 @@ namespace GuardWebApp.Pages.ShiftAllocationPage
 
             ShiftAllocation = await _context.ShiftAllocations
                 .Include(s => s.GuardArea)
-                .Include(s => s.Rhythm).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(s => s.Rhythm)
+                .Include(s => s.User).FirstOrDefaultAsync(m => m.Id == id);
 
             if (ShiftAllocation == null)
             {
@@ -44,6 +45,7 @@ namespace GuardWebApp.Pages.ShiftAllocationPage
             }
             ViewData["GuardAreaId"] = new SelectList(_context.GuardAreas, "Id", "Description");
             ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return Page();
         }
 

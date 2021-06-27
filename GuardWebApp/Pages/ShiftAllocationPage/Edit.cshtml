@@ -23,6 +23,11 @@
                 <span asp-validation-for="ShiftAllocation.RhythmId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">نگهبان</label>
+                <select asp-for="ShiftAllocation.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="ShiftAllocation.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label class="control-label">تاریخ</label>
                 <input asp-for="ShiftAllocation.DateTime" class="form-control" />
                 <span asp-validation-for="ShiftAllocation.DateTime" class="text-danger"></span>

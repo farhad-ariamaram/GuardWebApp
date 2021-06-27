@@ -24,27 +24,33 @@
                 <th>
                     ریتم
                 </th>
+                <th>
+                    نگهبان
+                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.ShiftAllocation)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GuardArea.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rhythm.Title)
-                    </td>
-                    <td>
-                        <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
-                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GuardArea.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rhythm.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)
+                </td>
+                <td>
+                    <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

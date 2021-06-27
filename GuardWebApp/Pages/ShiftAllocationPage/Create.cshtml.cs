@@ -26,6 +26,7 @@ namespace GuardWebApp.Pages.ShiftAllocationPage
 
             ViewData["GuardAreaId"] = new SelectList(_context.GuardAreas, "Id", "Description");
             ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return Page();
         }
 

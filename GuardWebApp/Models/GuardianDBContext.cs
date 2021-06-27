@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -316,6 +317,8 @@ namespace GuardWebApp.Models
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
+                entity.Property(e => e.UserId).HasColumnName("User_Id");
+
                 entity.HasOne(d => d.GuardArea)
                     .WithMany(p => p.ShiftAllocations)
                     .HasForeignKey(d => d.GuardAreaId)
@@ -326,6 +329,11 @@ namespace GuardWebApp.Models
                     .WithMany(p => p.ShiftAllocations)
                     .HasForeignKey(d => d.RhythmId)
                     .HasConstraintName("FK_ShiftAllocation_Rhythm");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.ShiftAllocations)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_ShiftAllocation_User");
             });
 
             modelBuilder.Entity<Status>(entity =>
