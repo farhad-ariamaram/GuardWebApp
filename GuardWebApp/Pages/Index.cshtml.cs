@@ -24,6 +24,7 @@ namespace GuardWebApp.Pages
 
         public IActionResult OnGet()
         {
+            
             var a = HttpContext.Session.GetString("uid");
             if (a != null)
             {

@@ -7,9 +7,9 @@ namespace GuardWebApp.Controllers.Utils
 {
     public class ApiUtilities
     {
-        public const string _KEY = "b14ca5898a4e4133bbce2ea2315a1916";
+        public const string _KEY = "c32452c3c45b657b8e567a856785a678";
         public const string _SALT = "SALT";
-        public const string _P0 = "1";
+        public const string _P0 = "2";
 
         public static string EncryptString(string plainText, string key)
         {
