@@ -125,7 +125,13 @@ else if (ViewData["Step2"] != null)
     <div class="alert alert-primary">
         @foreach (DateTime day in Utils.EachDay(Model.startDate, Model.endDate))
         {
-            @day.ToString(); <br />
+            @foreach (var item in Model.shiftAllocationList)
+            {
+                if (item.DateTime.Month == day.Month && item.DateTime.Day == day.Day)
+                {
+                    <div class="alert alert-info">@item.User.Name در تاریخ @day.ToString()</div> 
+                }
+            }
         }
     </div>
 

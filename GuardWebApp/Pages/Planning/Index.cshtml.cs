@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace GuardWebApp.Pages.Planning
 {
@@ -12,6 +15,8 @@ namespace GuardWebApp.Pages.Planning
 
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
+
+        public List<ShiftAllocation> shiftAllocationList { get; set; }
 
         public IndexModel(GuardianDBContext context)
         {
@@ -44,6 +49,8 @@ namespace GuardWebApp.Pages.Planning
                 default:
                     break;
             }
+
+            shiftAllocationList = _context.ShiftAllocations.Include(a=>a.User).ToList();
 
             ViewData["step2"] = true;
             ViewData["GuardsId"] = new SelectList(_context.Users, "Id", "Name");
