@@ -24,6 +24,7 @@ namespace GuardWebApp.Models
         public string Password { get; set; }
         public string Name { get; set; }
         public long UserTypeId { get; set; }
+        public string Token { get; set; }
 
         public virtual UserType UserType { get; set; }
         public virtual ICollection<Plan> Plans { get; set; }

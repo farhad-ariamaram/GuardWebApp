@@ -382,6 +382,8 @@ namespace GuardWebApp.Models
                     .IsRequired()
                     .HasMaxLength(3000);
 
+                entity.Property(e => e.Token).HasMaxLength(50);
+
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(50);

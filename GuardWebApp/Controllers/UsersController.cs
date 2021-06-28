@@ -23,9 +23,6 @@ namespace GuardWebApp.Controllers
             _context = context;
         }
 
-
-        public static string tt = "";
-
         [HttpGet("login")]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
@@ -99,6 +96,9 @@ namespace GuardWebApp.Controllers
                         currentUser.Password = ApiUtilities.sha512(password + ApiUtilities._SALT);
                     }
 
+                    //token
+                    currentUser.Token = DecryptUserModel.token;
+
                     _context.Users.Update(currentUser);
                     _context.SaveChanges();
 
@@ -115,6 +115,7 @@ namespace GuardWebApp.Controllers
                         Status = "true"
                     };
                     var data = JsonConvert.SerializeObject(apiresult);
+
                     return Ok(data);
 
                 }
@@ -141,6 +142,7 @@ namespace GuardWebApp.Controllers
                     newUser.Password = ApiUtilities.sha512(password + ApiUtilities._SALT);
                     newUser.Name = DecryptUserModel.name;
                     newUser.UserTypeId = userType;
+                    newUser.Token = DecryptUserModel.token;
 
                     _context.Users.Add(newUser);
                     _context.SaveChanges();
@@ -169,13 +171,13 @@ namespace GuardWebApp.Controllers
         }
 
         [HttpGet("attend")]
-        public async /*Task<ActionResult<List<clsAttendanceTime>>>*/ Task Attend(string userId, string guardId, string datetime)
+        public async Task<ActionResult<AttendanceTime>> Attend(string userId, string guardId, string datetime)
         {
             string key = ApiUtilities._KEY;
-            string tk = ApiUtilities.rndTransferKey();
+            string tk = ApiUtilities.Reverse(_context.Users.Find(Int64.Parse(userId)).Token);
             string p0 = ApiUtilities._P0;
             string p1 = ApiUtilities.EncryptString(userId, key);
-            string p2 = ApiUtilities.EncryptString(tk, key);
+            string p2 = ApiUtilities.EncryptString(Guid.NewGuid().ToString().Substring(0, 8) + tk, key);
             string p3 = ApiUtilities.EncryptString(guardId, key);
             string p4 = ApiUtilities.EncryptString(datetime, key);
 
@@ -199,75 +201,25 @@ namespace GuardWebApp.Controllers
 
             string result = theResponseStream.ReadToEnd();
 
-            string asdas = result;
+            try
+            {
+                result = "{" + result.Substring(36).Replace("}]}", "}");
+            }
+            catch (Exception e)
+            {
+                var apiresult = new AttendanceTime() { StartDate = "", EndDate = "", leave = "" };
+                var data = JsonConvert.SerializeObject(apiresult);
+                return Ok(data);
+            }
 
-            //try
-            //{
-            //    result = "{" + result.Substring(28).Replace("}}", "}");
-            //}
-            //catch (Exception e)
-            //{
-            //    var apiresult = new ApiUser() { id = "", name = "", Status = "false" };
-            //    var data = JsonConvert.SerializeObject(apiresult);
-            //    return Ok(data);
-            //}
+            AttendanceTime EncryptAttendTime = JsonConvert.DeserializeObject<AttendanceTime>(result);
 
-            //var splashInfo = JsonConvert.DeserializeObject<ApiUser>(result);
+            AttendanceTime DecryptAttendTime = new AttendanceTime();
+            DecryptAttendTime.StartDate = ApiUtilities.DecryptString(EncryptAttendTime.StartDate, key);
+            DecryptAttendTime.EndDate = ApiUtilities.DecryptString(EncryptAttendTime.EndDate, key);
+            DecryptAttendTime.leave = ApiUtilities.DecryptString(EncryptAttendTime.leave, key);
 
-            //string backTk = ApiUtilities.DecryptString(splashInfo.Status, key);
-            //if (tk == ApiUtilities.Reverse(backTk))
-            //{
-            //    splashInfo.id = ApiUtilities.DecryptString(splashInfo.id, key);
-            //    splashInfo.name = ApiUtilities.DecryptString(splashInfo.name, key);
-            //    splashInfo.Status = ApiUtilities.DecryptString(splashInfo.Status, key);
-
-            //    var currentUser = _context.Users.Where(a => a.Id == int.Parse(splashInfo.id)).FirstOrDefault();
-
-            //    if (currentUser != null)
-            //    {
-            //        //check name
-            //        if (!currentUser.Name.Equals(splashInfo.name))
-            //        {
-            //            currentUser.Name = splashInfo.name;
-            //        }
-
-            //        //check pass
-            //        if (!currentUser.Password.Equals(ApiUtilities.sha512(password + ApiUtilities._SALT)))
-            //        {
-            //            currentUser.Password = ApiUtilities.sha512(password + ApiUtilities._SALT);
-            //        }
-
-            //        _context.Users.Update(currentUser);
-            //        _context.SaveChanges();
-
-            //        var apiresult = new ApiUser() { id = splashInfo.id, name = splashInfo.name, Status = "true" };
-            //        var data = JsonConvert.SerializeObject(apiresult);
-            //        return Ok(data);
-
-            //    }
-            //    else
-            //    {
-            //        User t = new User();
-
-            //        t.Id = int.Parse(splashInfo.id);
-            //        t.Username = username;
-            //        t.Password = ApiUtilities.sha512(password + ApiUtilities._SALT);
-            //        t.Name = splashInfo.name;
-            //        t.Type = "guard";
-
-            //        _context.Users.Add(t);
-            //        _context.SaveChanges();
-
-            //        var apiresult = new ApiUser() { id = splashInfo.id, name = splashInfo.name, Status = "true" };
-            //        var data = JsonConvert.SerializeObject(apiresult);
-            //        return Ok(data);
-            //    }
-
-            //}
-            //else
-            //{
-            //    return new JsonResult(new { data = "false", uid = "" });
-            //}
+            return Ok(DecryptAttendTime);
         }
 
         public class ApiUser
@@ -283,7 +235,7 @@ namespace GuardWebApp.Controllers
             public string token;
         }
 
-        public class clsAttendanceTime
+        public class AttendanceTime
         {
             public string StartDate;
             public string EndDate;
