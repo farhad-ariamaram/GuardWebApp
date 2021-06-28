@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GuardWebApp.Models;
 using GuardWebApp.Utilities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,6 +32,12 @@ namespace GuardWebApp.Pages.Planning
 
         public IActionResult OnGet()
         {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
             ViewData["step1"] = true;
             return Page();
         }
