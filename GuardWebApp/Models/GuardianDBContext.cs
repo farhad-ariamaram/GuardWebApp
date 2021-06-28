@@ -36,6 +36,7 @@ namespace GuardWebApp.Models
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<SubmittedLocation> SubmittedLocations { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<Violation> Violations { get; set; }
         public virtual DbSet<ViolationConsequence> ViolationConsequences { get; set; }
         public virtual DbSet<ViolationNature> ViolationNatures { get; set; }
@@ -381,11 +382,22 @@ namespace GuardWebApp.Models
                     .IsRequired()
                     .HasMaxLength(3000);
 
-                entity.Property(e => e.Type)
+                entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Username)
+                entity.HasOne(d => d.UserType)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.UserTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_UserType");
+            });
+
+            modelBuilder.Entity<UserType>(entity =>
+            {
+                entity.ToTable("UserType");
+
+                entity.Property(e => e.Type)
                     .IsRequired()
                     .HasMaxLength(50);
             });

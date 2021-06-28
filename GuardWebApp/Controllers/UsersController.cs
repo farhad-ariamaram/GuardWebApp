@@ -23,13 +23,16 @@ namespace GuardWebApp.Controllers
             _context = context;
         }
 
+
+        public static string tt = "";
+
         [HttpGet("login")]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
             string key = ApiUtilities._KEY;
             string tk = ApiUtilities.rndTransferKey();
             string p0 = ApiUtilities._P0;
-            string p1 = ApiUtilities.EncryptString(username, key); ;
+            string p1 = ApiUtilities.EncryptString(username, key);
             string p2 = ApiUtilities.EncryptString(password, key);
             string p3 = ApiUtilities.EncryptString(tk, key);
 
@@ -64,23 +67,30 @@ namespace GuardWebApp.Controllers
                 return Ok(data);
             }
 
-            var splashInfo = JsonConvert.DeserializeObject<ApiUser>(result);
+            ApiUser EncryptUserModel = JsonConvert.DeserializeObject<ApiUser>(result);
 
-            string backTk = ApiUtilities.DecryptString(splashInfo.Status, key);
-            if (tk == ApiUtilities.Reverse(backTk))
+            string backTk = ApiUtilities.Reverse(ApiUtilities.DecryptString(EncryptUserModel.Status, key));
+            ApiUser DecryptUserModel = new ApiUser();
+            if (tk == backTk)
             {
-                splashInfo.id = ApiUtilities.DecryptString(splashInfo.id, key);
-                splashInfo.name = ApiUtilities.DecryptString(splashInfo.name, key);
-                splashInfo.Status = ApiUtilities.DecryptString(splashInfo.Status, key);
+                DecryptUserModel.id = ApiUtilities.DecryptString(EncryptUserModel.id, key);
+                DecryptUserModel.name = ApiUtilities.DecryptString(EncryptUserModel.name, key);
+                DecryptUserModel.Status = ApiUtilities.DecryptString(EncryptUserModel.Status, key);
+                DecryptUserModel.IsGuard = ApiUtilities.DecryptString(EncryptUserModel.IsGuard, key);
+                DecryptUserModel.IsGuardAdmin = ApiUtilities.DecryptString(EncryptUserModel.IsGuardAdmin, key);
+                DecryptUserModel.IsEmployeeRequest = ApiUtilities.DecryptString(EncryptUserModel.IsEmployeeRequest, key);
+                DecryptUserModel.IsGuardRecorder = ApiUtilities.DecryptString(EncryptUserModel.IsGuardRecorder, key);
+                DecryptUserModel.IsMould = ApiUtilities.DecryptString(EncryptUserModel.IsMould, key);
+                DecryptUserModel.token = ApiUtilities.DecryptString(EncryptUserModel.token, key);
 
-                var currentUser = _context.Users.Where(a => a.Id == int.Parse(splashInfo.id)).FirstOrDefault();
+                var currentUser = _context.Users.Where(a => a.Id == int.Parse(DecryptUserModel.id)).FirstOrDefault();
 
                 if (currentUser != null)
                 {
                     //check name
-                    if (!currentUser.Name.Equals(splashInfo.name))
+                    if (!currentUser.Name.Equals(DecryptUserModel.name))
                     {
-                        currentUser.Name = splashInfo.name;
+                        currentUser.Name = DecryptUserModel.name;
                     }
 
                     //check pass
@@ -92,25 +102,61 @@ namespace GuardWebApp.Controllers
                     _context.Users.Update(currentUser);
                     _context.SaveChanges();
 
-                    var apiresult = new ApiUser() { id = splashInfo.id, name = splashInfo.name, Status = "true" };
+                    var apiresult = new ApiUser()
+                    {
+                        id = DecryptUserModel.id,
+                        name = DecryptUserModel.name,
+                        IsEmployeeRequest = DecryptUserModel.IsEmployeeRequest,
+                        IsGuard = DecryptUserModel.IsEmployeeRequest,
+                        IsGuardAdmin = DecryptUserModel.IsGuardAdmin,
+                        IsGuardRecorder = DecryptUserModel.IsGuardRecorder,
+                        IsMould = DecryptUserModel.IsMould,
+                        token = DecryptUserModel.token,
+                        Status = "true"
+                    };
                     var data = JsonConvert.SerializeObject(apiresult);
                     return Ok(data);
 
                 }
                 else
                 {
-                    User t = new User();
+                    long userType = 1;
+                    if (DecryptUserModel.IsGuardRecorder == "True")
+                    {
+                        userType = _context.UserTypes.FirstOrDefault(a => a.Type == "Recorder").Id;
+                    }
+                    else if (DecryptUserModel.IsGuardAdmin == "True")
+                    {
+                        userType = _context.UserTypes.FirstOrDefault(a => a.Type == "Admin").Id;
+                    }
+                    else
+                    {
+                        userType = _context.UserTypes.FirstOrDefault(a => a.Type == "Guard").Id;
+                    }
 
-                    t.Id = int.Parse(splashInfo.id);
-                    t.Username = username;
-                    t.Password = ApiUtilities.sha512(password + ApiUtilities._SALT);
-                    t.Name = splashInfo.name;
-                    t.Type = "guard";
+                    User newUser = new User();
 
-                    _context.Users.Add(t);
+                    newUser.Id = Int64.Parse(DecryptUserModel.id);
+                    newUser.Username = username;
+                    newUser.Password = ApiUtilities.sha512(password + ApiUtilities._SALT);
+                    newUser.Name = DecryptUserModel.name;
+                    newUser.UserTypeId = userType;
+
+                    _context.Users.Add(newUser);
                     _context.SaveChanges();
 
-                    var apiresult = new ApiUser() { id = splashInfo.id, name = splashInfo.name, Status = "true" };
+                    var apiresult = new ApiUser()
+                    {
+                        id = DecryptUserModel.id,
+                        name = DecryptUserModel.name,
+                        IsEmployeeRequest = DecryptUserModel.IsEmployeeRequest,
+                        IsGuard = DecryptUserModel.IsGuard,
+                        IsGuardAdmin = DecryptUserModel.IsGuardAdmin,
+                        IsGuardRecorder = DecryptUserModel.IsGuardRecorder,
+                        IsMould = DecryptUserModel.IsMould,
+                        token = DecryptUserModel.token,
+                        Status = "true"
+                    };
                     var data = JsonConvert.SerializeObject(apiresult);
                     return Ok(data);
                 }
@@ -123,13 +169,13 @@ namespace GuardWebApp.Controllers
         }
 
         [HttpGet("attend")]
-        public async /*Task<ActionResult<List<clsAttendanceTime>>>*/ Task Attend(string userId, string datetime, string guardId)
+        public async /*Task<ActionResult<List<clsAttendanceTime>>>*/ Task Attend(string userId, string guardId, string datetime)
         {
             string key = ApiUtilities._KEY;
             string tk = ApiUtilities.rndTransferKey();
             string p0 = ApiUtilities._P0;
             string p1 = ApiUtilities.EncryptString(userId, key);
-            string p2 = ApiUtilities.EncryptString("12345678"+ tk, key);
+            string p2 = ApiUtilities.EncryptString(tk, key);
             string p3 = ApiUtilities.EncryptString(guardId, key);
             string p4 = ApiUtilities.EncryptString(datetime, key);
 
@@ -229,6 +275,12 @@ namespace GuardWebApp.Controllers
             public string Status;
             public string id;
             public string name;
+            public string IsGuard;
+            public string IsGuardAdmin;
+            public string IsEmployeeRequest;
+            public string IsGuardRecorder;
+            public string IsMould;
+            public string token;
         }
 
         public class clsAttendanceTime
