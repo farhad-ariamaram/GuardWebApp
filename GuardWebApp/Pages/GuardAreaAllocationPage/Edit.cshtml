@@ -1,0 +1,50 @@
+﻿@page
+@model GuardWebApp.Pages.GuardAreaAllocationPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>ویرایش تخصیص شیفت</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="GuardAreaAllocation.Id" />
+            <div class="form-group">
+                <label class="control-label">نگهبان</label>
+                <select asp-for="GuardAreaAllocation.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="GuardAreaAllocation.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ شروع</label>
+                <input asp-for="GuardAreaAllocation.StartDate" class="form-control" />
+                <span asp-validation-for="GuardAreaAllocation.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ پایان</label>
+                <input asp-for="GuardAreaAllocation.EndDate" class="form-control" />
+                <span asp-validation-for="GuardAreaAllocation.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">محل گشت</label>
+                <select asp-for="GuardAreaAllocation.GuardAreaId" class="form-control" asp-items="ViewBag.GuardAreaId"></select>
+                <span asp-validation-for="GuardAreaAllocation.GuardAreaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
