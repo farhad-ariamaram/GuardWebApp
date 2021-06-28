@@ -29,6 +29,7 @@ namespace GuardWebApp.Controllers
             string key = ApiUtilities._KEY;
             string tk = ApiUtilities.rndTransferKey();
             string p0 = ApiUtilities._P0;
+
             string p1 = ApiUtilities.EncryptString(username, key);
             string p2 = ApiUtilities.EncryptString(password, key);
             string p3 = ApiUtilities.EncryptString(tk, key);

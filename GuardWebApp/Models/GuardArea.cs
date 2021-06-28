@@ -9,6 +9,7 @@ namespace GuardWebApp.Models
     {
         public GuardArea()
         {
+            GuardAreaAllocations = new HashSet<GuardAreaAllocation>();
             Locations = new HashSet<Location>();
             Rhythms = new HashSet<Rhythm>();
             ShiftAllocations = new HashSet<ShiftAllocation>();
@@ -18,6 +19,7 @@ namespace GuardWebApp.Models
         public long Id { get; set; }
         public string Description { get; set; }
 
+        public virtual ICollection<GuardAreaAllocation> GuardAreaAllocations { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
         public virtual ICollection<Rhythm> Rhythms { get; set; }
         public virtual ICollection<ShiftAllocation> ShiftAllocations { get; set; }

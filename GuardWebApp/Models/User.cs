@@ -9,6 +9,7 @@ namespace GuardWebApp.Models
     {
         public User()
         {
+            GuardAreaAllocations = new HashSet<GuardAreaAllocation>();
             Plans = new HashSet<Plan>();
             RunApprovers = new HashSet<Run>();
             RunUsers = new HashSet<Run>();
@@ -27,6 +28,7 @@ namespace GuardWebApp.Models
         public string Token { get; set; }
 
         public virtual UserType UserType { get; set; }
+        public virtual ICollection<GuardAreaAllocation> GuardAreaAllocations { get; set; }
         public virtual ICollection<Plan> Plans { get; set; }
         public virtual ICollection<Run> RunApprovers { get; set; }
         public virtual ICollection<Run> RunUsers { get; set; }

@@ -122,18 +122,50 @@ else if (ViewData["Step2"] != null)
         تا: <div class="form-control">@Model.endDate</div>
     </div>
 
-    <div class="alert alert-primary">
+    @*<div class="alert alert-primary">
+            @foreach (DateTime day in Utils.EachDay(Model.startDate, Model.endDate))
+            {
+                @foreach (var item in Model.shiftAllocationList.Where(a=>a.DateTime.Month == day.Month && a.DateTime.Day == day.Day))
+                {
+                    <div class="alert alert-info">
+                        @item.User.Name : نام نگهبان <br />
+                        @day.ToShortDateString() : تاریخ <br />
+                        @foreach (var item2 in Model.rhythmDetails.Where(a=>a.RhythmId==item.RhythmId))
+                        {
+                            @item2.Location.Name <span>: مکان</span> <br />
+                            @item2.Time.ToString() <span>: زمان</span> <br />
+
+                            foreach (var item3 in Model.attendanceTimes.Where(a=>DateTime.Parse(a.StartDate).Month==day.Month && DateTime.Parse(a.StartDate).Day == day.Day))
+                            {
+                                if(item2.Time > new TimeSpan(DateTime.Parse(item3.StartDate).Hour, DateTime.Parse(item3.StartDate).Minute, DateTime.Parse(item3.StartDate).Second) && item2.Time < new TimeSpan(DateTime.Parse(item3.EndDate).Hour, DateTime.Parse(item3.EndDate).Minute, DateTime.Parse(item3.EndDate).Second))
+                                {
+                                    <div>OK</div>
+                                }
+                            }
+                        }
+                    </div>
+                }
+            }
+        </div>*@
+
+    @*<div class="alert alert-primary">
         @foreach (DateTime day in Utils.EachDay(Model.startDate, Model.endDate))
         {
-            @foreach (var item in Model.shiftAllocationList)
+            @foreach (var item in Model.shiftAllocationList.Where(a => a.DateTime.Month == day.Month && a.DateTime.Day == day.Day))
             {
-                if (item.DateTime.Month == day.Month && item.DateTime.Day == day.Day)
+                @foreach (var item2 in Model.rhythmDetails.Where(a => a.RhythmId == item.RhythmId))
                 {
-                    <div class="alert alert-info">@item.User.Name در تاریخ @day.ToString()</div> 
+                    foreach (var item3 in Model.attendanceTimes.Where(a => DateTime.Parse(a.StartDate).Month == day.Month && DateTime.Parse(a.StartDate).Day == day.Day))
+                    {
+                        if (item2.Time > new TimeSpan(DateTime.Parse(item3.StartDate).Hour, DateTime.Parse(item3.StartDate).Minute, DateTime.Parse(item3.StartDate).Second) && item2.Time < new TimeSpan(DateTime.Parse(item3.EndDate).Hour, DateTime.Parse(item3.EndDate).Minute, DateTime.Parse(item3.EndDate).Second) && item3.leave=="false")
+                        {
+                            <div>OK</div>
+                        }
+                    }
                 }
             }
         }
-    </div>
+    </div>*@
 
     <form asp-page-handler="Guards" method="post">
         <label>نگهبانان:</label>

@@ -23,6 +23,7 @@ namespace GuardWebApp.Models
         public virtual DbSet<Climate> Climates { get; set; }
         public virtual DbSet<Device> Devices { get; set; }
         public virtual DbSet<GuardArea> GuardAreas { get; set; }
+        public virtual DbSet<GuardAreaAllocation> GuardAreaAllocations { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<LocationDetail> LocationDetails { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
@@ -130,6 +131,25 @@ namespace GuardWebApp.Models
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<GuardAreaAllocation>(entity =>
+            {
+                entity.ToTable("GuardAreaAllocation");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.GuardArea)
+                    .WithMany(p => p.GuardAreaAllocations)
+                    .HasForeignKey(d => d.GuardAreaId)
+                    .HasConstraintName("FK_GuardAreaAllocation_GuardArea");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.GuardAreaAllocations)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_GuardAreaAllocation_User");
             });
 
             modelBuilder.Entity<Location>(entity =>
