@@ -91,49 +91,8 @@ namespace GuardWebApp.Pages.Planning
 
 
             ViewData["step2"] = true;
-            ViewData["GuardsId"] = new SelectList(_context.Users, "Id", "Name");
             return Page();
         }
 
-        public IActionResult OnPostGuards(int guardId)
-        {
-            ViewData["step3"] = true;
-            ViewData["GuardAreasId"] = new SelectList(_context.GuardAreas, "Id", "Description");
-            return Page();
-        }
-
-        public IActionResult OnPostGuardAreas(int guardAreaId)
-        {
-            ViewData["step4"] = true;
-            ViewData["ShiftsId"] = new SelectList(_context.Shifts, "Id", "DateTime");
-            return Page();
-        }
-
-        public IActionResult OnPostShifts(int shiftId)
-        {
-            ViewData["step5"] = true;
-            ViewData["LocationsId"] = new SelectList(_context.Locations, "Id", "Name");
-            return Page();
-        }
-
-        public IActionResult OnPostLocations(int locationId)
-        {
-            ViewData["step6"] = true;
-            ViewData["RhythmsId"] = new SelectList(_context.Rhythms, "Id", "Title");
-            return Page();
-        }
-
-        public IActionResult OnPostRhythms(int rhythmId)
-        {
-            ViewData["step7"] = true;
-            ViewData["RhythmDetailsId"] = new SelectList(_context.RhythmDetails, "Id", "Time");
-            return Page();
-        }
-
-        public IActionResult OnPostRhythmDetails(int rhythmDetailId)
-        {
-            ViewData["step8"] = true;
-            return Page();
-        }
     }
 }
