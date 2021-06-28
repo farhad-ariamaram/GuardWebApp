@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using GuardWebApp.Utilities;
 
 namespace GuardWebApp.Pages.GuardAreaAllocationPage
 {
@@ -42,8 +43,32 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
                 return Page();
             }
 
-            _context.GuardAreaAllocations.Add(GuardAreaAllocation);
+            if (GuardAreaAllocation.EndDate == null)
+            {
+                GuardAreaAllocation.EndDate = new DateTime(GuardAreaAllocation.StartDate.Year,12,29);
+            }
+
+            await _context.GuardAreaAllocations.AddAsync(GuardAreaAllocation);
             await _context.SaveChangesAsync();
+
+            foreach (DateTime day in Utils.EachDay(GuardAreaAllocation.StartDate, (DateTime)GuardAreaAllocation.EndDate))
+            {
+                if(_context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime.Month == day.Month && a.DateTime.Day == day.Day) != null)
+                {
+                    long rhythmId = _context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime.Month == day.Month && a.DateTime.Day == day.Day).RhythmId;
+                    ShiftAllocation shiftAllocation = new ShiftAllocation
+                    {
+                        DateTime = day,
+                        GuardAreaId = GuardAreaAllocation.GuardAreaId,
+                        RhythmId = rhythmId,
+                        UserId = GuardAreaAllocation.UserId
+                    };
+
+                    await _context.ShiftAllocations.AddAsync(shiftAllocation);
+                    await _context.SaveChangesAsync();
+                }
+                
+            }
 
             return RedirectToPage("./Index");
         }

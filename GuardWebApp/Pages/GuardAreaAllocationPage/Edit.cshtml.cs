@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using GuardWebApp.Utilities;
 
 namespace GuardWebApp.Pages.GuardAreaAllocationPage
 {
@@ -56,11 +57,42 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
                 return Page();
             }
 
+            if (GuardAreaAllocation.EndDate == null)
+            {
+                GuardAreaAllocation.EndDate = new DateTime(GuardAreaAllocation.StartDate.Year, 12, 29);
+            }
+
             _context.Attach(GuardAreaAllocation).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+
+                var shiftAllocation = await _context.ShiftAllocations.Where(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.UserId == GuardAreaAllocation.UserId).ToListAsync();
+                foreach (var item in shiftAllocation)
+                {
+                    _context.ShiftAllocations.Remove(item);
+                }
+                await _context.SaveChangesAsync();
+
+                foreach (DateTime day in Utils.EachDay(GuardAreaAllocation.StartDate, (DateTime)GuardAreaAllocation.EndDate))
+                {
+                    if (_context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime.Month == day.Month && a.DateTime.Day == day.Day) != null)
+                    {
+                        long rhythmId = _context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime.Month == day.Month && a.DateTime.Day == day.Day).RhythmId;
+                        ShiftAllocation shifttAllocation = new ShiftAllocation
+                        {
+                            DateTime = day,
+                            GuardAreaId = GuardAreaAllocation.GuardAreaId,
+                            RhythmId = rhythmId,
+                            UserId = GuardAreaAllocation.UserId
+                        };
+
+                        await _context.ShiftAllocations.AddAsync(shifttAllocation);
+                        await _context.SaveChangesAsync();
+                    }
+
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
