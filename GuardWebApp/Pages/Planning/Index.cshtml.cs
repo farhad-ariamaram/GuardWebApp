@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using GuardWebApp.Models;
@@ -61,9 +61,9 @@ namespace GuardWebApp.Pages.Planning
 
             attendanceTimes = new List<AttendanceTime>
             {
-                new AttendanceTime{ StartDate = "2021-06-01 08:00:00",EndDate = "2021-06-01 08:30:00", leave="false"},
-                new AttendanceTime{ StartDate = "2021-06-01 08:30:00",EndDate = "2021-06-01 09:00:00", leave="true"},
-                new AttendanceTime{ StartDate = "2021-06-01 09:00:00",EndDate = "2021-06-01 16:30:00", leave="false"}
+                new AttendanceTime{ StartDate = "2021-06-01 08:00:00",EndDate = "2021-06-01 09:00:00", leave="true"},
+                new AttendanceTime{ StartDate = "2021-06-01 09:00:00",EndDate = "2021-06-01 09:55:00", leave="false"},
+                new AttendanceTime{ StartDate = "2021-06-01 09:55:00",EndDate = "2021-06-01 16:30:00", leave="true"}
             };
 
             int i = 0;
@@ -74,10 +74,14 @@ namespace GuardWebApp.Pages.Planning
                 {
                     foreach (var item2 in rhythmDetails.Where(a => a.RhythmId == item.RhythmId))
                     {
+                        //در این مرحله اتندنستایم هر نگهبان رو میگیریم و روی اون حلقه میزنیم
+                        //در اینجا چون ای پی ای اماده نبود از دیتا این مموری استفاده کردیم
                         foreach (var item3 in attendanceTimes.Where(a => DateTime.Parse(a.StartDate).Month == day.Month && DateTime.Parse(a.StartDate).Day == day.Day))
                         {
-                            if (item2.Time > new TimeSpan(DateTime.Parse(item3.StartDate).Hour, DateTime.Parse(item3.StartDate).Minute, DateTime.Parse(item3.StartDate).Second) && item2.Time < new TimeSpan(DateTime.Parse(item3.EndDate).Hour, DateTime.Parse(item3.EndDate).Minute, DateTime.Parse(item3.EndDate).Second) && item3.leave == "false")
+                            if (item2.Time >= new TimeSpan(DateTime.Parse(item3.StartDate).Hour, DateTime.Parse(item3.StartDate).Minute, DateTime.Parse(item3.StartDate).Second) && item2.Time <= new TimeSpan(DateTime.Parse(item3.EndDate).Hour, DateTime.Parse(item3.EndDate).Minute, DateTime.Parse(item3.EndDate).Second) && item3.leave == "false")
                             {
+                                //در اینجا جدول پلن رو پر میکنیم
+                                //مقدار شیفت آی دی رو از طریق زمان، ریتم و محل گشت از جدول شیفت پیدا میکنیم
                                 i++;
                             }
                         }
