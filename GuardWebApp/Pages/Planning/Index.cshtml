@@ -27,11 +27,11 @@
                 <div>
                     <h5 class="text-dark">محل گشت</h5>
                     <p class="lead text-muted pb-3">
-                        محل گشت یک ناحیه مثل است که خود شامل چند مکان می‌باشد. به طور مثال ساختمان اداری یک محل گشت است که خود شامل چند مکان مانند اتاق های ساختمان می‌باشد
+                        محل گشت یک ناحیه است که خود شامل چند مکان می‌باشد. به طور مثال ساختمان اداری یک محل گشت است که خود شامل چند مکان مانند اتاق های ساختمان می‌باشد
                         <br />
                         اولین قدم در برنامه ریزی گشت، تعیین محل گشت های مورد نظر می‌باشد. برای این منظور می‌توانید از طریق دکمه زیر به صفحه تعریف محل گشت دسترسی پیدا کنید
                         <br />
-                        <span class="list-group-item"><a class="dropdown-item" asp-page="/GuardAreaPage/Index"><i class="far fa-map"></i>&nbsp;محل گشت</a></span>
+                        <span class="list-group-item"><a target="_blank" class="dropdown-item" asp-page="/GuardAreaPage/Index"><i class="far fa-map"></i>&nbsp;محل گشت</a></span>
                     </p>
                 </div>
             </div>
@@ -41,18 +41,76 @@
                     <div class="line h-100"></div>
                 </div>
                 <div>
-                    <h5 class="text-dark">Clone application respository</h5>
-                    <p class="lead text-muted pb-3">Go to your dashboard and clone Git respository from the url in the dashboard of your application</p>
+                    <h5 class="text-dark">مکان</h5>
+                    <p class="lead text-muted pb-3">
+                        مکان یک محل فیزیکی مثل "اتاق انفورماتیک" می‌باشد. هر مکان شامل نام، تگ کیو آر و تگ ان اف سی است و اینکه هر مکان متعلق به یک محل گشت می‌باشد
+                        <br />
+                        مرحله دوم در برنامه ریزی گشت، تعیین مکان های مورد نظر می‌باشد. برای این منظور می‌توانید از طریق دکمه زیر به صفحه تعریف مکان ها دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item"><a target="_blank" class="dropdown-item" asp-page="/LocationPage/Index"><i class="far fa-compass"></i>&nbsp;مکان</a></span>
+                    </p>
                 </div>
             </div>
             <div class="d-flex mb-1">
                 <div class="d-flex flex-column pr-4 align-items-center">
                     <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">3</div>
-                    <div class="line h-100 d-none"></div>
+                    <div class="line h-100"></div>
                 </div>
                 <div>
-                    <h5 class="text-dark">Make changes and push!</h5>
-                    <p class="lead text-muted pb-3">Now make changes to your application source code, test it then commit &amp; push</p>
+                    <h5 class="text-dark">ریتم و جزئیات ریتم</h5>
+                    <p class="lead text-muted pb-3">
+                        در این مرحله برای هر محل گشت باید ریتم تعریف شود، این ریتم شامل یک نام و محل گشت مربوطه اش می‌باشد. پس از تعریف ریتم در این مرحله به ازای هر ریتمی که تعریف شده باید زمان(ساعت) و ترتیب گشت زنی مکان های محل گشت آن تعیین ‌شود
+                        <br />
+                        برای تعریف ریتم و جزئیات ریتم می‌توانید از طریق دکمه زیر به صفحه تعریف آن ها دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item"><a target="_blank" class="dropdown-item" asp-page="/RhythmPage/Index"><i class="far fa-level-down"></i>&nbsp;ریتم</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pr-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">4</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">نگهبانان</h5>
+                    <p class="lead text-muted pb-3">
+                        در این مرحله نگهبان های مورد نظر که تازه استخدام شده اند و یا در سیستم موجود نمی‌باشند را می‌توانید به به سیستم اضافه کنید
+                        <br />
+                        برای معرفی نگهبان به سیستم می‌توانید از طریق دکمه زیر به صفحه مورد نظر دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item"><a target="_blank" class="dropdown-item" asp-page="/GuardPage/Index"><i class="far fa-user"></i>&nbsp;نگهبان</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pr-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">5</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">تعیین محل گشت</h5>
+                    <p class="lead text-muted pb-3">
+                        در این مرحله برای هر محل گشت، نگهبان و بازه زمانی گشت زنی نگهبان در آن محل گشت تعیین می‌شود. پس از تعیین هر مورد به صورت اتوماتیک به ازای هر روز از بازه زمانی انتخاب شده تخصیص شیفت به نگهبان انجام خواهد شد که شامل نگهبان، ریتم، محل گشت و تاریخ می‌باشد.
+                        <br />
+                        برای تعیین محل گشت می‌توانید از طریق دکمه زیر به صفحه مورد نظر دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item"><a target="_blank" class="dropdown-item" asp-page="/GuardAreaAllocationPage/Index"><i class="far fa-map"></i>&nbsp;تخصیص محل گشت</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pr-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">6</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">برنامه ریزی</h5>
+                    <p class="lead text-muted pb-3">
+                        پس از تعریف موارد قبل در این مرحله با انتخاب دکمه زیر به مرحله انتخاب بازه زمانی برای برنامه ریزی وارد خواهید شد
+                        <br />
+                        <span class="list-group-item"><a class="dropdown-item" asp-page-handler="Step2"><i class="far fa-tasks"></i>&nbsp;برنامه ریزی</a></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -66,7 +124,7 @@ else if (ViewData["Step2"] != null)
             <div class="card bg-c-yellow order-card">
                 <div class="card-block">
                     <h6 class="m-b-20"></h6>
-                    <h2 class="text-right"><i class="fas fa-qrcode f-left"></i><span>برنامه ریزی گشت</span></h2>
+                    <h2 class="text-right"><i class="fas fa-tasks f-left"></i><span>برنامه ریزی گشت</span></h2>
                     <p class="m-b-0"><span class="f-right"></span></p>
                 </div>
             </div>
@@ -188,7 +246,7 @@ else if (ViewData["Step3"] != null)
             <div class="card bg-c-yellow order-card">
                 <div class="card-block">
                     <h6 class="m-b-20"></h6>
-                    <h2 class="text-right"><i class="fas fa-qrcode f-left"></i><span>برنامه ریزی گشت</span></h2>
+                    <h2 class="text-right"><i class="fas fa-tasks f-left"></i><span>برنامه ریزی گشت</span></h2>
                     <p class="m-b-0"><span class="f-right"></span></p>
                 </div>
             </div>
@@ -205,4 +263,7 @@ else if (ViewData["Step3"] != null)
     <div class="alert alert-info">
         لیست پلن پر شد
     </div>
+
+    <span class="list-group-item"><a class="dropdown-item" asp-page="/PlanPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;مشاهده برنامه ریزی انجام شده</a></span>
+
 }

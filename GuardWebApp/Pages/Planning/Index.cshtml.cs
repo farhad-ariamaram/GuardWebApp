@@ -41,6 +41,13 @@ namespace GuardWebApp.Pages.Planning
             return Page();
         }
 
+        public IActionResult OnGetStep2()
+        {
+            ViewData["step1"] = null;
+            ViewData["step2"] = true;
+            return Page();
+        }
+
         public IActionResult OnPostDate(string sDate, string eDate, string timetype)
         {
             switch (timetype)
@@ -133,7 +140,9 @@ namespace GuardWebApp.Pages.Planning
                 }
             }
 
-            ViewData["step2"] = true;
+            ViewData["step1"] = null;
+            ViewData["step2"] = null;
+            ViewData["step3"] = true;
             return Page();
         }
 
