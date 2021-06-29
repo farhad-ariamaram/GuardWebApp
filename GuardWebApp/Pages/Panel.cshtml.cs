@@ -21,7 +21,7 @@ namespace GuardWebApp.Pages
             }
 
             UsersController api = new UsersController(_db);
-            await api.Attend("199","199", new DateTime(2021,06,12).ToShortDateString());
+            await api.Attend("199","198", new DateTime(2021,06,1).ToShortDateString());
 
             return Page();
         }
