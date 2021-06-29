@@ -5,6 +5,74 @@
 
 @if (ViewData["Step1"] != null)
 {
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20"></h6>
+                    <h2 class="text-right"><i class="fas fa-tasks f-left"></i><span>برنامه ریزی گشت</span></h2>
+                    <p class="m-b-0"><span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="stepper d-flex flex-column mt-5 ml-2">
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pr-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">1</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">محل گشت</h5>
+                    <p class="lead text-muted pb-3">
+                        محل گشت یک ناحیه مثل است که خود شامل چند مکان می‌باشد. به طور مثال ساختمان اداری یک محل گشت است که خود شامل چند مکان مانند اتاق های ساختمان می‌باشد
+                        <br />
+                        اولین قدم در برنامه ریزی گشت، تعیین محل گشت های مورد نظر می‌باشد. برای این منظور می‌توانید از طریق دکمه زیر به صفحه تعریف محل گشت دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item"><a class="dropdown-item" asp-page="/GuardAreaPage/Index"><i class="far fa-map"></i>&nbsp;محل گشت</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pr-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">2</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">Clone application respository</h5>
+                    <p class="lead text-muted pb-3">Go to your dashboard and clone Git respository from the url in the dashboard of your application</p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pr-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">3</div>
+                    <div class="line h-100 d-none"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">Make changes and push!</h5>
+                    <p class="lead text-muted pb-3">Now make changes to your application source code, test it then commit &amp; push</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else if (ViewData["Step2"] != null)
+{
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20"></h6>
+                    <h2 class="text-right"><i class="fas fa-qrcode f-left"></i><span>برنامه ریزی گشت</span></h2>
+                    <p class="m-b-0"><span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div>
         <div class="form-group">
             <label class="mr-sm-2" for="inlineFormCustomSelect">محدوده زمان:</label>
@@ -112,10 +180,21 @@
             <button type="submit" class="btn btn-primary">ثبت</button>
         </form>
     </div>
-
 }
-else if (ViewData["Step2"] != null)
+else if (ViewData["Step3"] != null)
 {
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20"></h6>
+                    <h2 class="text-right"><i class="fas fa-qrcode f-left"></i><span>برنامه ریزی گشت</span></h2>
+                    <p class="m-b-0"><span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="alert alert-success">
         تاریخ انتخابی:
         از: <div class="form-control">@Model.startDate</div>
@@ -126,5 +205,4 @@ else if (ViewData["Step2"] != null)
     <div class="alert alert-info">
         لیست پلن پر شد
     </div>
-
 }
