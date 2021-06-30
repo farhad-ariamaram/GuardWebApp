@@ -35,7 +35,13 @@
             {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DateTime)
+                    @try
+                    {
+                        @item.DateTime.removeYear();
+                    }
+                    catch (Exception)
+                    {
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.GuardArea.Description)

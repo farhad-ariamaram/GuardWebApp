@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using System.Globalization;
 
 namespace GuardWebApp.Pages.ShiftAllocationPage
 {
@@ -39,6 +40,9 @@ namespace GuardWebApp.Pages.ShiftAllocationPage
             {
                 return Page();
             }
+
+            PersianCalendar pc = new PersianCalendar();
+            ShiftAllocation.DateTime = new System.DateTime(1400, int.Parse(Request.Form["monthField"].ToString()), int.Parse(Request.Form["dayField"].ToString()), pc);
 
             _context.ShiftAllocations.Add(ShiftAllocation);
             await _context.SaveChangesAsync();
