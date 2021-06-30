@@ -22,14 +22,26 @@
             تاریخ شروع
         </dt>
         <dd class="col-sm-10">
-            @Model.Visittime.StartDate.removeYear()
+            @try
+            {
+                @Model.Visittime.StartDate.removeYear();
+            }
+            catch (Exception)
+            {
+            }
         </dd>
 
         <dt class="col-sm-2">
             تاریخ پایان
         </dt>
         <dd class="col-sm-10">
-            @Model.Visittime.EndDate.removeYear()
+            @try
+            {
+                @Model.Visittime.EndDate.removeYear();
+            }
+            catch (Exception)
+            {
+            }
         </dd>
 
         <dt class="col-sm-2">

@@ -45,10 +45,22 @@
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
                     <td>
-                        @item.StartDate.removeYear()
+                        @try
+                        {
+                            @item.StartDate.removeYear()
+                        }
+                        catch (Exception)
+                        {
+                        }
                     </td>
                     <td>
-                        @item.EndDate.removeYear()
+                        @try
+                        {
+                            @item.EndDate.removeYear()
+                        }
+                        catch (Exception)
+                        {
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.StartTime)

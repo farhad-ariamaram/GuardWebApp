@@ -15,7 +15,14 @@
             تاریخ
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Shift.DateTime)
+            @try
+            {
+                @Model.Shift.DateTime.removeYear();
+            }
+            catch (Exception)
+            {
+            }
+
         </dd>
         <dt class="col-sm-2">
            محل گشت

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace GuardWebApp.Utilities
 {
@@ -7,7 +8,14 @@ namespace GuardWebApp.Utilities
     {
         public static string removeYear(this DateTime datetime)
         {
-            return string.Format("{0}/{1}", datetime.Month, datetime.Day);
+            PersianCalendar pc = new PersianCalendar();
+            return string.Format("{0}/{1}", pc.GetMonth(datetime), pc.GetDayOfMonth(datetime));
+        }
+
+        public static string getPersianDay(this DateTime datetime)
+        {
+            PersianCalendar pc = new PersianCalendar();
+            return string.Format("{0}", pc.GetDayOfMonth(datetime));
         }
 
         public static IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using System.Globalization;
 
 namespace GuardWebApp.Pages.ShiftPage
 {
@@ -53,6 +54,9 @@ namespace GuardWebApp.Pages.ShiftPage
             {
                 return Page();
             }
+
+            PersianCalendar pc = new PersianCalendar();
+            Shift.DateTime = new System.DateTime(1400, int.Parse(Request.Form["monthField"].ToString()), int.Parse(Request.Form["dayField"].ToString()), pc);
 
             _context.Attach(Shift).State = EntityState.Modified;
 
