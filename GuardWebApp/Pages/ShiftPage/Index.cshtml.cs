@@ -33,5 +33,10 @@ namespace GuardWebApp.Pages.ShiftPage
 
             return Page();
         }
+
+        public IActionResult OnPostAuto(string sdayField, string smonthField, string edayField, string emonthField)
+        {
+            return Page();
+        }
     }
 }

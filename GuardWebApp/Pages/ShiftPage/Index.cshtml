@@ -5,6 +5,92 @@
     ViewData["Title"] = "Index";
 }
 
+@* یک قسمت برای خودکار پر شدن شیفت *@
+
+<div class="row d-flex justify-content-center">
+    <a class="btn btn-primary" onclick="$('#autoShiftSection').show()">پر کردن خودکار شیفت</a>
+    <div class="col-12 text-center" id="autoShiftSection">
+        <form onsubmit="checkdates(event)" asp-page-handler="Auto" method="post">
+            <input type="hidden" name="timetype" value="tofrom" />
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ شروع</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="sdayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="smonthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ پایان</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="edayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="emonthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+                <script>
+                    function toggleAutoSection() {
+                        var elem = document.getElementById("autoShiftSection");
+                        elem.setAttribute('style', 'display:none !important');
+                    }
+                    function checkdates(evt) {
+                        var smonth = $("select[name=smonthField]").val();
+                        var sday = $("input[name=sdayField]").val();
+                        var emonth = $("select[name=emonthField]").val();
+                        var eday = $("input[name=edayField]").val();
+                        var sres = checkMonthDay(smonth, sday);
+                        var eres = checkMonthDay(emonth, eday);
+                        if (!sres || !eres) {
+                            alert("روز و ماه انتخاب شده اشتباه است");
+                            evt.preventDefault();
+                            evt.returnValue = false;
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
+            </div>
+            <button type="submit" class="btn btn-primary">ثبت</button>
+            <a class="btn btn-danger" onclick="toggleAutoSection()">بستن</a>
+        </form>
+    </div>
+
+</div>
+
+
+
+
 <h1>جدول شیفت</h1>
 
 <p>
