@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using GuardWebApp.Utilities;
 
 namespace GuardWebApp.Pages.GuardAreaAllocationPage
 {
@@ -60,10 +61,17 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
                 _context.GuardAreaAllocations.Remove(GuardAreaAllocation);
                 await _context.SaveChangesAsync();
 
-                var shiftAllocation = await _context.ShiftAllocations.Where(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.UserId == GuardAreaAllocation.UserId).ToListAsync();
-                foreach (var item in shiftAllocation)
+                foreach (DateTime day in Utils.EachDay(GuardAreaAllocation.StartDate, (DateTime)GuardAreaAllocation.EndDate))
                 {
-                    _context.ShiftAllocations.Remove(item);
+                    var shiftAllocation = await _context.ShiftAllocations.FirstOrDefaultAsync(a => a.DateTime == day && a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.UserId == GuardAreaAllocation.UserId);
+                    try
+                    {
+                        _context.ShiftAllocations.Remove(shiftAllocation);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    
                 }
                 await _context.SaveChangesAsync();
             }
