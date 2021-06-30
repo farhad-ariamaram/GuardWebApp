@@ -9,21 +9,82 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form onsubmit="checkmonthdays(event)" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">نگهبان</label>
                 <select asp-for="GuardAreaAllocation.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
-            <div class="form-group">
-                <label class="control-label">تاریخ شروع</label>
-                <input asp-for="GuardAreaAllocation.StartDate" class="form-control" />
-                <span asp-validation-for="GuardAreaAllocation.StartDate" class="text-danger"></span>
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ شروع</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="sdayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="smonthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="control-label">تاریخ پایان(در صورت خالی بودن تا آخر سال در نظر گرفته خواهد شد)</label>
-                <input asp-for="GuardAreaAllocation.EndDate" class="form-control" />
-                <span asp-validation-for="GuardAreaAllocation.EndDate" class="text-danger"></span>
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ پایان(در صورت خالی بودن تا آخر سال در نظر گرفته خواهد شد)</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="edayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="emonthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+                <script>
+                    function checkmonthdays(evt) {
+                        var smonth = $("select[name=smonthField]").val();
+                        var sday = $("input[name=sdayField]").val();
+                        var emonth = $("select[name=emonthField]").val();
+                        var eday = $("input[name=edayField]").val();
+                        var sres = checkMonthDay(smonth, sday);
+                        var eres;
+                        if (emonth == "" || eday=="") {
+                            eres = true;
+                        }else {
+                            eres = checkMonthDay(emonth, eday);
+                        }
+                        
+                        if (!sres || !eres) {
+                            alert("روز و ماه انتخاب شده اشتباه است");
+                            evt.preventDefault();
+                            evt.returnValue = false;
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
             </div>
             <div class="form-group">
                 <label class="control-label">محل گشت</label>

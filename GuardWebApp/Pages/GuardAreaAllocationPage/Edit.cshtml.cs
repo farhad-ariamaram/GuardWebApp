@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
 using GuardWebApp.Utilities;
+using System.Globalization;
 
 namespace GuardWebApp.Pages.GuardAreaAllocationPage
 {
@@ -57,9 +58,16 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
                 return Page();
             }
 
-            if (GuardAreaAllocation.EndDate == null)
+            PersianCalendar pc = new PersianCalendar();
+            GuardAreaAllocation.StartDate = new System.DateTime(1400, int.Parse(Request.Form["smonthField"].ToString()), int.Parse(Request.Form["sdayField"].ToString()), pc);
+
+            if (string.IsNullOrEmpty(Request.Form["emonthField"].ToString()) || string.IsNullOrEmpty(Request.Form["edayField"].ToString()))
             {
-                GuardAreaAllocation.EndDate = new DateTime(GuardAreaAllocation.StartDate.Year, 12, 29);
+                GuardAreaAllocation.EndDate = new DateTime(1400, 12, 29, pc);
+            }
+            else
+            {
+                GuardAreaAllocation.EndDate = new System.DateTime(1400, int.Parse(Request.Form["emonthField"].ToString()), int.Parse(Request.Form["edayField"].ToString()), pc);
             }
 
             _context.Attach(GuardAreaAllocation).State = EntityState.Modified;

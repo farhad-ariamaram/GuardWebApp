@@ -35,10 +35,23 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.StartDate)
+                        @try
+                        {
+                            @item.StartDate.removeYear()
+                        }
+                        catch (Exception)
+                        {
+                        }
+
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.EndDate)
+                        @try
+                        {
+                            @item.EndDate.Value.removeYear();
+                        }
+                        catch (Exception)
+                        {
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.GuardArea.Description)
