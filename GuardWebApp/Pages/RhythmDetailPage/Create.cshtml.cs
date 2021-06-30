@@ -31,8 +31,8 @@ namespace GuardWebApp.Pages.RhythmDetailPage
                 return RedirectToPage("../404");
             }
 
-            var location = _context.Locations.Find(rhythmId);
-            if (location == null)
+            var rythm = _context.Rhythms.Find(rhythmId);
+            if (rythm == null)
             {
                 return RedirectToPage("../404");
             }
