@@ -71,7 +71,13 @@
                         var emonth = $("select[name=emonthField]").val();
                         var eday = $("input[name=edayField]").val();
                         var sres = checkMonthDay(smonth, sday);
-                        var eres = checkMonthDay(emonth, eday);
+                        var eres;
+                        if (emonth == "" || eday == "") {
+                            eres = true;
+                        } else {
+                            eres = checkMonthDay(emonth, eday);
+                        }
+
                         if (!sres || !eres) {
                             alert("روز و ماه انتخاب شده اشتباه است");
                             evt.preventDefault();

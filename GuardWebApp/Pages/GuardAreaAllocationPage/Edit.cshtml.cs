@@ -85,22 +85,29 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
 
                 foreach (DateTime day in Utils.EachDay(GuardAreaAllocation.StartDate, (DateTime)GuardAreaAllocation.EndDate))
                 {
-                    if (_context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime.Month == day.Month && a.DateTime.Day == day.Day) != null)
+                    var shift = _context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime == day);
+                    if (shift != null)
                     {
-                        long rhythmId = _context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime.Month == day.Month && a.DateTime.Day == day.Day).RhythmId;
-                        ShiftAllocation shifttAllocation = new ShiftAllocation
+                        ShiftAllocation shiftAllocation1 = new ShiftAllocation
                         {
                             DateTime = day,
                             GuardAreaId = GuardAreaAllocation.GuardAreaId,
-                            RhythmId = rhythmId,
+                            RhythmId = shift.RhythmId,
                             UserId = GuardAreaAllocation.UserId
                         };
 
-                        await _context.ShiftAllocations.AddAsync(shifttAllocation);
-                        await _context.SaveChangesAsync();
+                        if (!_context.ShiftAllocations.Where(a => a.DateTime == day && a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.RhythmId == shift.RhythmId && a.UserId == GuardAreaAllocation.UserId).Any())
+                        {
+                            await _context.ShiftAllocations.AddAsync(shiftAllocation1);
+                            await _context.SaveChangesAsync();
+                        }
                     }
-
+                    else
+                    {
+                        ViewData["noShiftsDates"] += "," + day.ToString();
+                    }
                 }
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -114,7 +121,7 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { nf = ViewData["noShiftsDates"] });
         }
 
         private bool GuardAreaAllocationExists(long id)

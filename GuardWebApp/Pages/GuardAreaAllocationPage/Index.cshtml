@@ -11,6 +11,29 @@
     <a class="btn btn-success" asp-page="Create"><i class="fa fa-plus"></i></a>
 </p>
 
+@if (Model.notFillDates != null)
+{
+    <div class="alert alert-info">
+        در تاریخ های زیر بدلیل نبود شیفت، تخصیص شیفت انجام نشد<br />
+        <ul>
+            @foreach (var item in Model.notFillDates)
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        <li>@DateTime.Parse(item).removeYear()</li>
+                    }
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+        </ul>
+    </div>
+}
+
 <div class="table-responsive">
     <table class="table table-striped table-hover">
         <thead>

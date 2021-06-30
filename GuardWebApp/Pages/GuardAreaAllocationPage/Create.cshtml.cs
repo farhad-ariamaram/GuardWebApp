@@ -61,24 +61,30 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
 
             foreach (DateTime day in Utils.EachDay(GuardAreaAllocation.StartDate, (DateTime)GuardAreaAllocation.EndDate))
             {
-                if(_context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime.Month == day.Month && a.DateTime.Day == day.Day) != null)
+                var shift = _context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime == day);
+                if(shift != null)
                 {
-                    long rhythmId = _context.Shifts.FirstOrDefault(a => a.GuardAreaId == GuardAreaAllocation.GuardAreaId && a.DateTime.Month == day.Month && a.DateTime.Day == day.Day).RhythmId;
                     ShiftAllocation shiftAllocation = new ShiftAllocation
                     {
                         DateTime = day,
                         GuardAreaId = GuardAreaAllocation.GuardAreaId,
-                        RhythmId = rhythmId,
+                        RhythmId = shift.RhythmId,
                         UserId = GuardAreaAllocation.UserId
                     };
 
-                    await _context.ShiftAllocations.AddAsync(shiftAllocation);
-                    await _context.SaveChangesAsync();
+                    if (!_context.ShiftAllocations.Where(a=>a.DateTime==day && a.GuardAreaId== GuardAreaAllocation.GuardAreaId && a.RhythmId== shift.RhythmId &&a.UserId== GuardAreaAllocation.UserId).Any())
+                    {
+                        await _context.ShiftAllocations.AddAsync(shiftAllocation);
+                        await _context.SaveChangesAsync();
+                    }
                 }
-                
+                else
+                {
+                    ViewData["noShiftsDates"] += "," + day.ToString();
+                }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { nf = ViewData["noShiftsDates"] });
         }
     }
 }

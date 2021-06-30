@@ -21,7 +21,9 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
 
         public IList<GuardAreaAllocation> GuardAreaAllocation { get;set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public string[] notFillDates { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string nf)
         {
             var uid = HttpContext.Session.GetString("uid");
             if (uid == null)
@@ -32,6 +34,11 @@ namespace GuardWebApp.Pages.GuardAreaAllocationPage
             GuardAreaAllocation = await _context.GuardAreaAllocations
                 .Include(g => g.GuardArea)
                 .Include(g => g.User).ToListAsync();
+
+            if (!string.IsNullOrEmpty(nf))
+            {
+                notFillDates = nf.Split(',');
+            }
 
             return Page();
         }
