@@ -109,30 +109,32 @@ namespace GuardWebApp.Pages.Planning
                             //در اینجا چون ای پی ای اماده نبود از دیتا این مموری استفاده کردیم
                             List<AttendanceTime> attendanceTimes = new List<AttendanceTime>
                             {
-                                new AttendanceTime{ StartDate = "2021-03-21 08:00:00",EndDate = "2021-03-21 16:30:00", leave="false"},
-                                new AttendanceTime{ StartDate = "2021-03-22 09:00:00",EndDate = "2021-03-22 16:30:00", leave="false"},
-                                new AttendanceTime{ StartDate = "2021-03-23 09:55:00",EndDate = "2021-03-23 16:30:00", leave="false"}
+                                new AttendanceTime{ StartDate = "2021-03-21 09:00:00",EndDate = "2021-03-21 16:30:00", leave="false"},
+                                new AttendanceTime{ StartDate = "2021-03-22 09:00:00",EndDate = "2021-03-22 16:30:00", leave="false"}
                             };
 
                             foreach (var attendanceTime in attendanceTimes)
                             {
-                                if (time >= new TimeSpan(DateTime.Parse(attendanceTime.StartDate).Hour, DateTime.Parse(attendanceTime.StartDate).Minute, DateTime.Parse(attendanceTime.StartDate).Second) &&
+                                if (day.Month == DateTime.Parse(attendanceTime.StartDate).Month && day.Day == DateTime.Parse(attendanceTime.EndDate).Day)
+                                {
+                                    if (time >= new TimeSpan(DateTime.Parse(attendanceTime.StartDate).Hour, DateTime.Parse(attendanceTime.StartDate).Minute, DateTime.Parse(attendanceTime.StartDate).Second) &&
                                     time < new TimeSpan(DateTime.Parse(attendanceTime.EndDate).Hour, DateTime.Parse(attendanceTime.EndDate).Minute, DateTime.Parse(attendanceTime.EndDate).Second) &&
                                     attendanceTime.leave == "false")
-                                {
-                                    Plan plan = new Plan
                                     {
-                                        UserId = guard,
-                                        LocationId = location,
-                                        ShiftId = shift,
-                                        DateTime = new DateTime(2021, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds)
-                                    };
-                                    if (!_context.Plans.Where(a => a.UserId == guard && a.LocationId == location && a.ShiftId == shift && a.DateTime == new DateTime(1400, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds, pc)).Any())
-                                    {
-                                        _context.Plans.Add(plan);
-                                        _context.SaveChanges();
-                                    }
+                                        Plan plan = new Plan
+                                        {
+                                            UserId = guard,
+                                            LocationId = location,
+                                            ShiftId = shift,
+                                            DateTime = new DateTime(2021, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds)
+                                        };
+                                        if (!_context.Plans.Where(a => a.UserId == guard && a.LocationId == location && a.ShiftId == shift && a.DateTime == new DateTime(1400, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds, pc)).Any())
+                                        {
+                                            _context.Plans.Add(plan);
+                                            _context.SaveChanges();
+                                        }
 
+                                    }
                                 }
                             }
                         }
