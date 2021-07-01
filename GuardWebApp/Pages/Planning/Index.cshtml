@@ -191,41 +191,146 @@ else if (ViewData["Step2"] != null)
             return true;
         }
 
-        function treatAsUTC(date) {
-            var result = new Date(date);
-            result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
-            return result;
-        }
 
-        function daysBetween(startDate, endDate) {
-            var millisecondsPerDay = 24 * 60 * 60 * 1000;
-            return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerDay;
-        }
 
 
     </script>
 
     <div id="tofrom" style="display:block">
-        <form onsubmit="checkmax30days(event)" asp-page-handler="Date" method="post">
+        <form onsubmit="checkmonthdays(event)" asp-page-handler="Date" method="post">
             <input type="hidden" name="timetype" value="tofrom" />
-            <div class="form-group">
-                <label>تاریخ شروع:</label>
-                <input name="sDate" type="datetime-local" class="form-control">
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ شروع</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="sdayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="smonthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label>تاریخ پایان:</label>
-                <input name="eDate" type="datetime-local" class="form-control">
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ پایان(در صورت خالی بودن تا آخر سال در نظر گرفته خواهد شد)</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="edayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="emonthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+                <script>
+                    function treatAsUTC(date) {
+                        var result = new Date(date);
+                        result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
+                        return result;
+                    }
+
+                    function daysBetween(startDate, endDate) {
+                        var millisecondsPerDay = 24 * 60 * 60 * 1000;
+                        return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerDay;
+                    }
+
+                    function checkmonthdays(evt) {
+                        var smonth = $("select[name=smonthField]").val();
+                        var sday = $("input[name=sdayField]").val();
+                        var emonth = $("select[name=emonthField]").val();
+                        var eday = $("input[name=edayField]").val();
+                        var sres = checkMonthDay(smonth, sday);
+                        var eres = checkMonthDay(emonth, eday);
+
+                        if (!sres || !eres) {
+                            alert("روز و ماه انتخاب شده اشتباه است");
+                            evt.preventDefault();
+                            evt.returnValue = false;
+                            return false;
+                        }
+
+                        var startDate1 = new Date(2000, smonth, sday);
+                        var endDate1 = new Date(2000, emonth, eday);
+
+                        if (daysBetween(startDate1, endDate1) > 31) {
+                            alert("محدوده زمانی حداکثر 31 روز میباشد");
+                            evt.preventDefault();
+                            evt.returnValue = false;
+                            return false;
+                        }
+
+                        return true;
+                    }
+                </script>
             </div>
             <button type="submit" class="btn btn-primary">ثبت</button>
         </form>
     </div>
 
     <div id="daily" style="display:none">
-        <form asp-page-handler="Date" method="post">
+        <form asp-page-handler="Date" method="post" onsubmit="checkmonthdays2(event)">
             <input type="hidden" name="timetype" value="daily" />
-            <div class="form-group">
-                <label>روز :</label>
-                <input name="sDate" type="datetime-local" class="form-control">
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="dayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="monthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+                <script>
+                    function checkmonthdays2(evt) {
+                        var month = $("select[name=monthField]").val();
+                        var day = $("input[name=dayField]").val();
+                        var res = checkMonthDay(month, day);
+                        if (!res) {
+                            alert("روز و ماه انتخاب شده اشتباه است");
+                            evt.preventDefault();
+                            evt.returnValue = false;
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
             </div>
             <button type="submit" class="btn btn-primary">ثبت</button>
         </form>
