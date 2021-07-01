@@ -1,4 +1,5 @@
-﻿using GuardWebApp.Models;
+﻿using GuardWebApp.Controllers.Utils;
+using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -31,14 +32,15 @@ namespace GuardApiApp.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult Login(string user, string pass)
+        public async Task<ActionResult<User>> Login(string user, string pass)
         {
-            string key = Utilities.Utilities._KEY;
-            string tk = Utilities.Utilities.rndTransferKey();
-            string p0 = Utilities.Utilities._P0;
-            string p1 = Utilities.Utilities.EncryptString(user, key); ;
-            string p2 = Utilities.Utilities.EncryptString(pass, key);
-            string p3 = Utilities.Utilities.EncryptString(tk, key);
+            string key = ApiUtilities._KEY;
+            string tk = ApiUtilities.rndTransferKey();
+            string p0 = ApiUtilities._P0;
+
+            string p1 = ApiUtilities.EncryptString(user, key);
+            string p2 = ApiUtilities.EncryptString(pass, key);
+            string p3 = ApiUtilities.EncryptString(tk, key);
 
             var theWebRequest = HttpWebRequest.Create("http://192.168.10.250/ExLogin.aspx/LI");
             theWebRequest.Method = "POST";
@@ -71,52 +73,101 @@ namespace GuardApiApp.Controllers
                 return Ok(data);
             }
 
-            var splashInfo = JsonConvert.DeserializeObject<ApiUser>(result);
+            ApiUser EncryptUserModel = JsonConvert.DeserializeObject<ApiUser>(result);
 
-            string backTk = Utilities.Utilities.DecryptString(splashInfo.Status, key);
-            if (tk == Utilities.Utilities.Reverse(backTk))
+            string backTk = ApiUtilities.Reverse(ApiUtilities.DecryptString(EncryptUserModel.Status, key));
+            ApiUser DecryptUserModel = new ApiUser();
+            if (tk == backTk)
             {
-                splashInfo.id = Utilities.Utilities.DecryptString(splashInfo.id, key);
-                splashInfo.name = Utilities.Utilities.DecryptString(splashInfo.name, key);
-                splashInfo.Status = Utilities.Utilities.DecryptString(splashInfo.Status, key);
+                DecryptUserModel.id = ApiUtilities.DecryptString(EncryptUserModel.id, key);
+                DecryptUserModel.name = ApiUtilities.DecryptString(EncryptUserModel.name, key);
+                DecryptUserModel.Status = ApiUtilities.DecryptString(EncryptUserModel.Status, key);
+                DecryptUserModel.IsGuard = ApiUtilities.DecryptString(EncryptUserModel.IsGuard, key);
+                DecryptUserModel.IsGuardAdmin = ApiUtilities.DecryptString(EncryptUserModel.IsGuardAdmin, key);
+                DecryptUserModel.IsEmployeeRequest = ApiUtilities.DecryptString(EncryptUserModel.IsEmployeeRequest, key);
+                DecryptUserModel.IsGuardRecorder = ApiUtilities.DecryptString(EncryptUserModel.IsGuardRecorder, key);
+                DecryptUserModel.IsMould = ApiUtilities.DecryptString(EncryptUserModel.IsMould, key);
+                DecryptUserModel.token = ApiUtilities.DecryptString(EncryptUserModel.token, key);
 
-                var currentUser = _db.Users.Where(a => a.Id == int.Parse(splashInfo.id)).FirstOrDefault();
+                var currentUser = _db.Users.Where(a => a.Id == int.Parse(DecryptUserModel.id)).FirstOrDefault();
 
                 if (currentUser != null)
                 {
                     //check name
-                    if (!currentUser.Name.Equals(splashInfo.name))
+                    if (!currentUser.Name.Equals(DecryptUserModel.name))
                     {
-                        currentUser.Name = splashInfo.name;
+                        currentUser.Name = DecryptUserModel.name;
                     }
 
                     //check pass
-                    if (!currentUser.Password.Equals(Utilities.Utilities.sha512(pass + Utilities.Utilities._SALT)))
+                    if (!currentUser.Password.Equals(ApiUtilities.sha512(pass + ApiUtilities._SALT)))
                     {
-                        currentUser.Password = Utilities.Utilities.sha512(pass + Utilities.Utilities._SALT);
+                        currentUser.Password = ApiUtilities.sha512(pass + ApiUtilities._SALT);
                     }
+
+                    //token
+                    currentUser.Token = DecryptUserModel.token;
 
                     _db.Users.Update(currentUser);
                     _db.SaveChanges();
 
-                    var apiresult = new ApiUser() { id = splashInfo.id, name = splashInfo.name, Status = "true" };
+                    var apiresult = new ApiUser()
+                    {
+                        id = DecryptUserModel.id,
+                        name = DecryptUserModel.name,
+                        IsEmployeeRequest = DecryptUserModel.IsEmployeeRequest,
+                        IsGuard = DecryptUserModel.IsEmployeeRequest,
+                        IsGuardAdmin = DecryptUserModel.IsGuardAdmin,
+                        IsGuardRecorder = DecryptUserModel.IsGuardRecorder,
+                        IsMould = DecryptUserModel.IsMould,
+                        token = DecryptUserModel.token,
+                        Status = "true"
+                    };
                     var data = JsonConvert.SerializeObject(apiresult);
+
                     return Ok(data);
 
                 }
                 else
                 {
-                    User t = new User();
+                    long userType = 1;
+                    if (DecryptUserModel.IsGuardRecorder == "True")
+                    {
+                        userType = _db.UserTypes.FirstOrDefault(a => a.Type == "Recorder").Id;
+                    }
+                    else if (DecryptUserModel.IsGuardAdmin == "True")
+                    {
+                        userType = _db.UserTypes.FirstOrDefault(a => a.Type == "Admin").Id;
+                    }
+                    else
+                    {
+                        userType = _db.UserTypes.FirstOrDefault(a => a.Type == "Guard").Id;
+                    }
 
-                    t.Id = int.Parse(splashInfo.id);
-                    t.Username = user;
-                    t.Password = Utilities.Utilities.sha512(pass + Utilities.Utilities._SALT);
-                    t.Name = splashInfo.name;
+                    User newUser = new User();
 
-                    _db.Users.Add(t);
+                    newUser.Id = Int64.Parse(DecryptUserModel.id);
+                    newUser.Username = user;
+                    newUser.Password = ApiUtilities.sha512(pass + ApiUtilities._SALT);
+                    newUser.Name = DecryptUserModel.name;
+                    newUser.UserTypeId = userType;
+                    newUser.Token = DecryptUserModel.token;
+
+                    _db.Users.Add(newUser);
                     _db.SaveChanges();
 
-                    var apiresult = new ApiUser() { id = splashInfo.id, name = splashInfo.name, Status = "true" };
+                    var apiresult = new ApiUser()
+                    {
+                        id = DecryptUserModel.id,
+                        name = DecryptUserModel.name,
+                        IsEmployeeRequest = DecryptUserModel.IsEmployeeRequest,
+                        IsGuard = DecryptUserModel.IsGuard,
+                        IsGuardAdmin = DecryptUserModel.IsGuardAdmin,
+                        IsGuardRecorder = DecryptUserModel.IsGuardRecorder,
+                        IsMould = DecryptUserModel.IsMould,
+                        token = DecryptUserModel.token,
+                        Status = "true"
+                    };
                     var data = JsonConvert.SerializeObject(apiresult);
                     return Ok(data);
                 }
@@ -178,5 +229,11 @@ namespace GuardApiApp.Controllers
         public string Status;
         public string id;
         public string name;
+        public string IsGuard;
+        public string IsGuardAdmin;
+        public string IsEmployeeRequest;
+        public string IsGuardRecorder;
+        public string IsMould;
+        public string token;
     }
 }

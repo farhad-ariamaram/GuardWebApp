@@ -88,20 +88,6 @@ namespace GuardWebApp.Controllers.Utils
             return reverse;
         }
 
-        //public static string rndTransferKey()
-        //{
-        //    string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
-        //    char[] chars = new char[12];
-        //    Random rd = new Random();
-
-        //    for (int i = 0; i < 12; i++)
-        //    {
-        //        chars[i] = allowedChars[rd.Next(0, allowedChars.Length)];
-        //    }
-
-        //    return new string(chars);
-        //}
-
         public static string rndTransferKey(int len = 12)
         {
             string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
