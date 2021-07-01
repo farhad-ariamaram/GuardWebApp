@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using System.Globalization;
+using System;
 
 namespace GuardWebApp.Pages.PlanPage
 {
@@ -39,6 +41,10 @@ namespace GuardWebApp.Pages.PlanPage
             {
                 return Page();
             }
+
+            PersianCalendar pc = new PersianCalendar();
+            var time = TimeSpan.Parse(Request.Form["timeField"].ToString());
+            Plan.DateTime = new System.DateTime(1400, int.Parse(Request.Form["monthField"].ToString()), int.Parse(Request.Form["dayField"].ToString()), time.Hours, time.Minutes, time.Seconds, pc);
 
             _context.Plans.Add(Plan);
             await _context.SaveChangesAsync();

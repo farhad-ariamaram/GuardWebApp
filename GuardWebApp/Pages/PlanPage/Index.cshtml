@@ -35,7 +35,13 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DateTime)
+                        @try
+                        {
+                            @item.DateTime.ToString("HH:mm") @(" - ") @item.DateTime.removeYear()
+                        }
+                        catch (Exception)
+                        {
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Location.Name)

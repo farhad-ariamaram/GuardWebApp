@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" onsubmit="checkmonthdays(event)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">نگهبان</label>
@@ -20,9 +20,49 @@
                 <select asp-for="Plan.ShiftId" class ="form-control" asp-items="ViewBag.ShiftId"></select>
             </div>
             <div class="form-group">
-                <label class="control-label">تاریخ</label>
-                <input asp-for="Plan.DateTime" class="form-control" />
-                <span asp-validation-for="Plan.DateTime" class="text-danger"></span>
+                <div class="form-group row">
+                    <label class="col-12 col-control-label">تاریخ</label>
+                    <label class="col-2 col-form-label">روز</label>
+                    <div class="col-10">
+                        <input type="number" name="dayField" class="form-control">
+                    </div>
+                    <label class="col-2 col-form-label">ماه</label>
+                    <div class="col-10">
+                        <select class="form-control" name="monthField">
+                            <option value="1">فروردین</option>
+                            <option value="2">اردیبهشت</option>
+                            <option value="3">خرداد</option>
+                            <option value="4">تیر</option>
+                            <option value="5">مرداد</option>
+                            <option value="6">شهریور</option>
+                            <option value="7">مهر</option>
+                            <option value="8">آبان</option>
+                            <option value="9">آذر</option>
+                            <option value="10">دی</option>
+                            <option value="11">بهمن</option>
+                            <option value="12">اسفند</option>
+                        </select>
+                    </div>
+                    <label class="col-2 col-form-label">ساعت</label>
+                    <div class="col-10">
+                        <input type="time" name="timeField" class="form-control">
+                    </div>
+                    <script>
+                        function checkmonthdays(evt) {
+                            var month = $("select[name=monthField]").val();
+                            var day = $("input[name=dayField]").val();
+                            var time = $("input[name=timeField]").val();
+                            var res = checkMonthDay(month, day);
+                            if (!res || time == null) {
+                                alert("روز و ماه انتخاب شده اشتباه است");
+                                evt.preventDefault();
+                                evt.returnValue = false;
+                                return false;
+                            }
+                            return true;
+                        }
+                    </script>
+                </div>
             </div>
             <div class="form-group">
                 <label class="control-label">مکان</label>

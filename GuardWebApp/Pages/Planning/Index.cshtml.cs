@@ -125,7 +125,7 @@ namespace GuardWebApp.Pages.Planning
                                         UserId = guard,
                                         LocationId = location,
                                         ShiftId = shift,
-                                        DateTime = new DateTime(1400, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds, pc)
+                                        DateTime = new DateTime(2021, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds)
                                     };
                                     if (!_context.Plans.Where(a => a.UserId == guard && a.LocationId == location && a.ShiftId == shift && a.DateTime == new DateTime(1400, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds, pc)).Any())
                                     {

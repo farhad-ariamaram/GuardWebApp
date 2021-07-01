@@ -15,7 +15,13 @@
             تاریخ
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plan.DateTime)
+            @try
+            {
+                Model.Plan.DateTime.removeYear();
+            }
+            catch (Exception)
+            {
+            }
         </dd>
         <dt class="col-sm-2">
             مکان
