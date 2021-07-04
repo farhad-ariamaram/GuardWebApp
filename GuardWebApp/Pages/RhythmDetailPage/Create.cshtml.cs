@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace GuardWebApp.Pages.RhythmDetailPage
 {
@@ -39,7 +40,7 @@ namespace GuardWebApp.Pages.RhythmDetailPage
 
             rhythmIdProp = rhythmId.Value;
 
-            ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
+            ViewData["LocationId"] = new SelectList(_context.Locations.Where(a=>a.GuardAreaId== rythm.GuardAreaId), "Id", "Name");
             ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
             return Page();
         }

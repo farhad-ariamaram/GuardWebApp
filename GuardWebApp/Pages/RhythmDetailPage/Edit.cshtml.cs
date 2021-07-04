@@ -42,8 +42,10 @@ namespace GuardWebApp.Pages.RhythmDetailPage
             {
                 return NotFound();
             }
-           ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
-           ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
+
+            var guardAreaId = _context.Rhythms.Find(RhythmDetail.RhythmId).GuardAreaId;
+            ViewData["LocationId"] = new SelectList(_context.Locations.Where(a => a.GuardAreaId == guardAreaId), "Id", "Name");
+            ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
             return Page();
         }
 
