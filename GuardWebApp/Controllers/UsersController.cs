@@ -206,11 +206,11 @@ namespace GuardWebApp.Controllers
             {
                 result = "{" + result.Substring(36).Replace("}]}", "}");
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                var apiresult = new AttendanceTime() { StartDate = "", EndDate = "", leave = "" };
-                var data = JsonConvert.SerializeObject(apiresult);
-                return Ok(data);
+                var emptyAttendanceTime = new AttendanceTime() { StartDate = "", EndDate = "", leave = "" };
+                var serializedemptyAttendanceTime = JsonConvert.SerializeObject(emptyAttendanceTime);
+                return Ok(serializedemptyAttendanceTime);
             }
 
             AttendanceTime EncryptAttendTime = JsonConvert.DeserializeObject<AttendanceTime>(result);
@@ -220,7 +220,9 @@ namespace GuardWebApp.Controllers
             DecryptAttendTime.EndDate = ApiUtilities.DecryptString(EncryptAttendTime.EndDate, key);
             DecryptAttendTime.leave = ApiUtilities.DecryptString(EncryptAttendTime.leave, key);
 
-            return Ok(DecryptAttendTime);
+            var serializedDecryptAttendTime = JsonConvert.SerializeObject(DecryptAttendTime);
+
+            return Ok(serializedDecryptAttendTime);
         }
 
         public class ApiUser
