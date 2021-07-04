@@ -43,8 +43,7 @@ namespace GuardWebApp.Pages.CheckLocationPage
 
             locationIdProp = locationId.Value;
 
-            var loc = await _context.Locations.FindAsync(locationId);
-            ViewData["LocationName"] = loc.Name;
+            ViewData["LocationName"] = location.Name;
 
             CheckLocation = await _context.CheckLocations
                 .Where(a => a.LocationId == locationId)

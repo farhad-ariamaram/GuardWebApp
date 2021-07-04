@@ -35,13 +35,15 @@ namespace GuardWebApp.Pages.RhythmDetailPage
                 return RedirectToPage("../404");
             }
 
-            var location = await _context.Rhythms.FindAsync(rhythmId);
-            if (location == null)
+            var rhythm = await _context.Rhythms.FindAsync(rhythmId);
+            if (rhythm == null)
             {
                 return RedirectToPage("../404");
             }
 
             rhythmIdProp = rhythmId.Value;
+
+            ViewData["CurrentRhythm"] = rhythm.Title;
 
             RhythmDetail = await _context.RhythmDetails
                 .Where(a => a.RhythmId == rhythmId)

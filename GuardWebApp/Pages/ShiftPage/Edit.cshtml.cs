@@ -43,8 +43,10 @@ namespace GuardWebApp.Pages.ShiftPage
             {
                 return NotFound();
             }
-            ViewData["GuardAreaId"] = new SelectList(_context.GuardAreas, "Id", "Description");
-            ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
+
+            var guardArea = await _context.GuardAreas.FindAsync(Shift.GuardAreaId);
+            ViewData["GuardAreaName"] = guardArea.Description;
+            ViewData["RhythmId"] = new SelectList(_context.Rhythms.Where(a=>a.GuardAreaId==Shift.GuardAreaId), "Id", "Title");
             return Page();
         }
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GuardWebApp.Models;
 using Microsoft.AspNetCore.Http;
 using System.Globalization;
+using System.Linq;
 
 namespace GuardWebApp.Pages.ShiftPage
 {
@@ -25,15 +26,31 @@ namespace GuardWebApp.Pages.ShiftPage
                 return RedirectToPage("../Index");
             }
 
+            ViewData["step1"] = "true";
+            ViewData["step2"] = null;
             ViewData["GuardAreaId"] = new SelectList(_context.GuardAreas, "Id", "Description");
-            ViewData["RhythmId"] = new SelectList(_context.Rhythms, "Id", "Title");
+            return Page();
+        }
+
+        public IActionResult OnPostStep2(long guardId)
+        {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            ViewData["step1"] = null;
+            ViewData["step2"] = "true";
+            ViewData["GuardAreaId"] = guardId;
+            ViewData["RhythmId"] = new SelectList(_context.Rhythms.Where(a=>a.GuardAreaId==guardId), "Id", "Title");
             return Page();
         }
 
         [BindProperty]
         public Shift Shift { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostStep3()
         {
             if (!ModelState.IsValid)
             {
