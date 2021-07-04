@@ -6,7 +6,7 @@
 }
 
 <h1>جدول بررسی مکان ها</h1>
-
+<h2>مکان انتخاب شده : @ViewData["LocationName"]</h2>
 <p>
     <a class="btn btn-success" asp-page="Create" asp-route-locationId="@Model.locationIdProp"><i class="fa fa-plus"></i></a>
 </p>
@@ -23,9 +23,6 @@
                 </th>
                 <th>
                     آب و هوا
-                </th>
-                <th>
-                    مکان
                 </th>
                 <th>
                     زمان (های) بازدید
@@ -45,9 +42,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Climate.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Location.Name)
                     </td>
                     <th>
                         @foreach (var visittime in item.CheckLocationVisittimes)
