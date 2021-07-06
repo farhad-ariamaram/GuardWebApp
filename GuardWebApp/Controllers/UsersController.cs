@@ -172,7 +172,7 @@ namespace GuardWebApp.Controllers
         }
 
         [HttpGet("attend")]
-        public async Task<ActionResult<AttendanceTime>> Attend(string userId, string guardId, string datetime)
+        public async Task<ActionResult<List<AttendanceTime>>> Attend(string userId, string guardId, string datetime)
         {
             string key = ApiUtilities._KEY;
             string tk = ApiUtilities.Reverse(_context.Users.Find(Int64.Parse(userId)).Token);
@@ -202,23 +202,17 @@ namespace GuardWebApp.Controllers
 
             string result = theResponseStream.ReadToEnd();
 
-            try
-            {
-                result = "{" + result.Substring(36).Replace("}]}", "}");
-            }
-            catch (Exception)
-            {
-                var emptyAttendanceTime = new AttendanceTime() { StartDate = "", EndDate = "", leave = "" };
-                var serializedemptyAttendanceTime = JsonConvert.SerializeObject(emptyAttendanceTime);
-                return Ok(serializedemptyAttendanceTime);
-            }
-
             AttendanceTime EncryptAttendTime = JsonConvert.DeserializeObject<AttendanceTime>(result);
 
-            AttendanceTime DecryptAttendTime = new AttendanceTime();
-            DecryptAttendTime.StartDate = ApiUtilities.DecryptString(EncryptAttendTime.StartDate, key);
-            DecryptAttendTime.EndDate = ApiUtilities.DecryptString(EncryptAttendTime.EndDate, key);
-            DecryptAttendTime.leave = ApiUtilities.DecryptString(EncryptAttendTime.leave, key);
+            List<AttendanceTime> DecryptAttendTime = new List<AttendanceTime>();
+            //foreach (var item in EncryptAttendTime)
+            //{
+            //    AttendanceTime DecAtTime = new AttendanceTime();
+            //    DecAtTime.StartDate = ApiUtilities.DecryptString(item.StartDate, key);
+            //    DecAtTime.EndDate = ApiUtilities.DecryptString(item.EndDate, key);
+            //    DecAtTime.leave = ApiUtilities.DecryptString(item.leave, key);
+            //    DecryptAttendTime.Add(DecAtTime);
+            //}
 
             var serializedDecryptAttendTime = JsonConvert.SerializeObject(DecryptAttendTime);
 
@@ -240,9 +234,11 @@ namespace GuardWebApp.Controllers
 
         public class AttendanceTime
         {
-            public string StartDate;
-            public string EndDate;
-            public string leave;
+            public string __type { get; set; }
+            public string StartDate { get; set; }
+            public string EndDate { get; set; }
+            public string leave { get; set; }
         }
+
     }
 }
