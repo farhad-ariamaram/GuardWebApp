@@ -202,19 +202,25 @@ namespace GuardWebApp.Controllers
 
             string result = theResponseStream.ReadToEnd();
 
-            AttendanceTime EncryptAttendTime = JsonConvert.DeserializeObject<AttendanceTime>(result);
+            Root r = JsonConvert.DeserializeObject<Root>(result);
+            List<AttendanceTime> EncryptAttendTimeList = new List<AttendanceTime>();
 
-            List<AttendanceTime> DecryptAttendTime = new List<AttendanceTime>();
-            //foreach (var item in EncryptAttendTime)
-            //{
-            //    AttendanceTime DecAtTime = new AttendanceTime();
-            //    DecAtTime.StartDate = ApiUtilities.DecryptString(item.StartDate, key);
-            //    DecAtTime.EndDate = ApiUtilities.DecryptString(item.EndDate, key);
-            //    DecAtTime.leave = ApiUtilities.DecryptString(item.leave, key);
-            //    DecryptAttendTime.Add(DecAtTime);
-            //}
+            foreach (var item in r.d)
+            {
+                EncryptAttendTimeList.Add(item);
+            }
 
-            var serializedDecryptAttendTime = JsonConvert.SerializeObject(DecryptAttendTime);
+            List<AttendanceTime> DecryptAttendTimeList = new List<AttendanceTime>();
+            foreach (var item2 in EncryptAttendTimeList)
+            {
+                AttendanceTime DecAtTime = new AttendanceTime();
+                DecAtTime.StartDate = ApiUtilities.DecryptString(item2.StartDate, key);
+                DecAtTime.EndDate = ApiUtilities.DecryptString(item2.EndDate, key);
+                DecAtTime.leave = ApiUtilities.DecryptString(item2.leave, key);
+                DecryptAttendTimeList.Add(DecAtTime);
+            }
+
+            var serializedDecryptAttendTime = JsonConvert.SerializeObject(DecryptAttendTimeList);
 
             return Ok(serializedDecryptAttendTime);
         }
@@ -238,6 +244,11 @@ namespace GuardWebApp.Controllers
             public string StartDate { get; set; }
             public string EndDate { get; set; }
             public string leave { get; set; }
+        }
+
+        public class Root
+        {
+            public List<AttendanceTime> d { get; set; }
         }
 
     }
