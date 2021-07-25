@@ -13,12 +13,6 @@ namespace GuardWebApp.Models
         public DateTime EndDate { get; set; }
 
         [Required(ErrorMessage = "این فیلد اجباری است")]
-        public TimeSpan StartTime { get; set; }
-
-        [Required(ErrorMessage = "این فیلد اجباری است")]
-        public TimeSpan EndTime { get; set; }
-
-        [Required(ErrorMessage = "این فیلد اجباری است")]
         [StringLength(500, MinimumLength = 2, ErrorMessage = "طول این فیلد حداقل 2 و حداکثر 500 کاراکتر می‌باشد")]
         public string Description { get; set; }
 
