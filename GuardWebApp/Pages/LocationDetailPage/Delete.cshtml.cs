@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +36,7 @@ namespace GuardWebApp.Pages.LocationDetailPage
             }
 
             LocationDetail = await _context.LocationDetails
-                .Include(l => l.CheckLocation)
+                .Include(l => l.Check)
                 .Include(l => l.Climate)
                 .Include(l => l.Location).FirstOrDefaultAsync(m => m.Id == id);
 

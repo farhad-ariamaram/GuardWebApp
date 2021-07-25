@@ -10,7 +10,6 @@ namespace GuardWebApp.Models
         public CheckLocation()
         {
             CheckLocationVisittimes = new HashSet<CheckLocationVisittime>();
-            LocationDetails = new HashSet<LocationDetail>();
         }
 
         public long Id { get; set; }
@@ -23,6 +22,5 @@ namespace GuardWebApp.Models
         public virtual Climate Climate { get; set; }
         public virtual Location Location { get; set; }
         public virtual ICollection<CheckLocationVisittime> CheckLocationVisittimes { get; set; }
-        public virtual ICollection<LocationDetail> LocationDetails { get; set; }
     }
 }

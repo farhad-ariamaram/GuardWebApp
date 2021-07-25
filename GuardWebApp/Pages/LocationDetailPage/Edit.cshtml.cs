@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -35,7 +37,7 @@ namespace GuardWebApp.Pages.LocationDetailPage
             }
 
             LocationDetail = await _context.LocationDetails
-                .Include(l => l.CheckLocation)
+                .Include(l => l.Check)
                 .Include(l => l.Climate)
                 .Include(l => l.Location).FirstOrDefaultAsync(m => m.Id == id);
 
@@ -43,12 +45,13 @@ namespace GuardWebApp.Pages.LocationDetailPage
             {
                 return NotFound();
             }
-            ViewData["CheckLocationId"] = new SelectList(_context.CheckLocations, "Id", "Description");
+
+            ViewData["CheckId"] = new SelectList(_context.Checks, "Id", "Name");
             ViewData["ClimateId"] = new SelectList(_context.Climates, "Id", "Name");
             ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
+
             return Page();
         }
-
 
         public async Task<IActionResult> OnPostAsync()
         {

@@ -9,6 +9,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace GuardWebApp.Controllers
 {
@@ -21,6 +22,46 @@ namespace GuardWebApp.Controllers
         public UsersController(GuardianDBContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("connect")]
+        public async Task<IActionResult> Connect()
+        {
+            return new JsonResult(true);
+        }
+
+        [HttpGet("getPlans")]
+        public async Task<IActionResult> getPlans()
+        {
+            var data = await _context.Plans.ToListAsync();
+            return new JsonResult(data);
+        }
+
+        [HttpGet("getLocations")]
+        public async Task<IActionResult> getLocations()
+        {
+            var data = await _context.Locations.ToListAsync();
+            return new JsonResult(data);
+        }
+
+
+        ////////////////////////////////////////////
+        [HttpPost("postSubmittedLocations")]
+        public async Task<IActionResult> PostSubmittedLocations(SubmittedLocation submittedLocation)
+        {
+            try
+            {
+                submittedLocation.Id = 100;
+                await _context.AddAsync(submittedLocation);
+                await _context.SaveChangesAsync();
+                return new JsonResult(true);
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+            
         }
 
         [HttpGet("login")]
@@ -220,9 +261,7 @@ namespace GuardWebApp.Controllers
                 DecryptAttendTimeList.Add(DecAtTime);
             }
 
-            var serializedDecryptAttendTime = JsonConvert.SerializeObject(DecryptAttendTimeList);
-
-            return Ok(serializedDecryptAttendTime);
+            return DecryptAttendTimeList;
         }
 
         public class ApiUser

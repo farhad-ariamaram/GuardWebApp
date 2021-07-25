@@ -179,11 +179,15 @@ namespace GuardWebApp.Models
             {
                 entity.ToTable("LocationDetail");
 
-                entity.HasOne(d => d.CheckLocation)
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.HasOne(d => d.Check)
                     .WithMany(p => p.LocationDetails)
-                    .HasForeignKey(d => d.CheckLocationId)
+                    .HasForeignKey(d => d.CheckId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_LocationDetail_CheckLocation");
+                    .HasConstraintName("FK_LocationDetail_Check");
 
                 entity.HasOne(d => d.Climate)
                     .WithMany(p => p.LocationDetails)
@@ -368,6 +372,8 @@ namespace GuardWebApp.Models
             modelBuilder.Entity<SubmittedLocation>(entity =>
             {
                 entity.ToTable("SubmittedLocation");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 

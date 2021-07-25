@@ -28,6 +28,9 @@
                     محل گشت
                 </th>
                 <th>
+                    جزئیات مکان
+                </th>
+                <th>
                     بررسی مکان
                 </th>
                 <th></th>
@@ -36,27 +39,30 @@
         <tbody>
             @foreach (var item in Model.Location)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Qr)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nfc)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GuardArea.Description)
-                    </td>
-                    <td>
-                        <a target="_blank" class="btn btn-primary text-white" asp-page="../CheckLocationPage/Index" asp-route-LocationId="@item.Id"><i class="fa fa-plus"></i>&nbsp;<i class="fa fa-edit"></i>&nbsp;<i class="fa fa-trash"></i></a>
-                    </td>
-                    <td>
-                        <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
-                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nfc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GuardArea.Description)
+                </td>
+                <td>
+                    <a target="_blank" class="btn btn-primary text-white" asp-page="../LocationDetailPage/Auto" asp-route-LocationId="@item.Id"><i class="fa fa-autoprefixer"></i></a>
+                </td>
+                <td>
+                    <a target="_blank" class="btn btn-primary text-white" asp-page="../CheckLocationPage/Index" asp-route-LocationId="@item.Id"><i class="fa fa-plus"></i>&nbsp;<i class="fa fa-edit"></i>&nbsp;<i class="fa fa-trash"></i></a>
+                </td>
+                <td>
+                    <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

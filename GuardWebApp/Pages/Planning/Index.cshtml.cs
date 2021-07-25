@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using GuardWebApp.Controllers;
 using GuardWebApp.Models;
 using GuardWebApp.Utilities;
 using Microsoft.AspNetCore.Http;
@@ -49,9 +51,16 @@ namespace GuardWebApp.Pages.Planning
             return Page();
         }
 
-        public IActionResult OnPostDate(string sDate, string timetype)
+        public async Task<ActionResult> OnPostDate(string sDate, string timetype)
         {
+            var uid = HttpContext.Session.GetString("uid");
+            if (uid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
             PersianCalendar pc = new PersianCalendar();
+            UsersController api = new UsersController(_context);
 
             switch (timetype)
             {
@@ -101,40 +110,48 @@ namespace GuardWebApp.Pages.Planning
                         var guardArea = shiftAllocation.GuardAreaId;
                         var rhythm = shiftAllocation.RhythmId;
                         long shift = 0;
+                        var attendanceListAsync = await api.Attend(uid, $"{guard}", day.ToShortDateString());
+                        var attendanceList = attendanceListAsync.Value;
+
                         if (_context.Shifts.Where(a => a.DateTime.Month == day.Month && a.DateTime.Day == day.Day && a.GuardAreaId == guardArea && a.RhythmId == rhythm).Any())
                         {
                             shift = _context.Shifts.FirstOrDefault(a => a.DateTime.Month == day.Month && a.DateTime.Day == day.Day && a.GuardAreaId == guardArea && a.RhythmId == rhythm).Id;
+                            bool flag = false;
 
-                            //در این مرحله حضور نگهبان در این روز را بوسیله آی دی نگهبان که در بالا بدست اوردیم و روز(دٍی) میگیریم
-                            //در اینجا چون ای پی ای اماده نبود از دیتا این مموری استفاده کردیم
-                            List<AttendanceTime> attendanceTimes = new List<AttendanceTime>
-                            {
-                                new AttendanceTime{ StartDate = "2021-03-21 09:00:00",EndDate = "2021-03-21 16:30:00", leave="false"},
-                                new AttendanceTime{ StartDate = "2021-03-22 09:00:00",EndDate = "2021-03-22 16:30:00", leave="false"}
-                            };
-
-                            foreach (var attendanceTime in attendanceTimes)
+                            foreach (var attendanceTime in attendanceList)
                             {
                                 if (day.Month == DateTime.Parse(attendanceTime.StartDate).Month && day.Day == DateTime.Parse(attendanceTime.EndDate).Day)
                                 {
                                     if (time >= new TimeSpan(DateTime.Parse(attendanceTime.StartDate).Hour, DateTime.Parse(attendanceTime.StartDate).Minute, DateTime.Parse(attendanceTime.StartDate).Second) &&
-                                    time < new TimeSpan(DateTime.Parse(attendanceTime.EndDate).Hour, DateTime.Parse(attendanceTime.EndDate).Minute, DateTime.Parse(attendanceTime.EndDate).Second) &&
+                                    time <= new TimeSpan(DateTime.Parse(attendanceTime.EndDate).Hour, DateTime.Parse(attendanceTime.EndDate).Minute, DateTime.Parse(attendanceTime.EndDate).Second) &&
                                     attendanceTime.leave == "false")
                                     {
-                                        Plan plan = new Plan
-                                        {
-                                            UserId = guard,
-                                            LocationId = location,
-                                            ShiftId = shift,
-                                            DateTime = new DateTime(2021, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds)
-                                        };
-                                        if (!_context.Plans.Where(a => a.UserId == guard && a.LocationId == location && a.ShiftId == shift && a.DateTime == new DateTime(1400, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds, pc)).Any())
-                                        {
-                                            _context.Plans.Add(plan);
-                                            _context.SaveChanges();
-                                        }
-
+                                        flag = true;
                                     }
+
+                                    if (time >= new TimeSpan(DateTime.Parse(attendanceTime.StartDate).Hour, DateTime.Parse(attendanceTime.StartDate).Minute, DateTime.Parse(attendanceTime.StartDate).Second) &&
+                                    time <= new TimeSpan(DateTime.Parse(attendanceTime.EndDate).Hour, DateTime.Parse(attendanceTime.EndDate).Minute, DateTime.Parse(attendanceTime.EndDate).Second) &&
+                                    attendanceTime.leave == "true")
+                                    {
+                                        flag = false;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (flag)
+                            {
+                                Plan plan = new Plan
+                                {
+                                    UserId = guard,
+                                    LocationId = location,
+                                    ShiftId = shift,
+                                    DateTime = new DateTime(2021, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds)
+                                };
+                                if (!_context.Plans.Where(a => a.UserId == guard && a.LocationId == location && a.ShiftId == shift && a.DateTime == new DateTime(1400, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds, pc)).Any())
+                                {
+                                    _context.Plans.Add(plan);
+                                    _context.SaveChanges();
                                 }
                             }
                         }

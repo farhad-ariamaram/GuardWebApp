@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using static GuardWebApp.Controllers.UsersController;
 
 namespace GuardWebApp.Pages
 {
@@ -21,7 +23,7 @@ namespace GuardWebApp.Pages
             }
 
             UsersController api = new UsersController(_db);
-            await api.Attend("199","199", new DateTime(2021,05,23).ToShortDateString());
+            var a =  await api.Attend("199","199", new DateTime(2021,05,23).ToShortDateString());
 
             return Page();
         }

@@ -16,7 +16,19 @@
         <thead>
             <tr>
                 <th>
-                    بررسی مکان
+                    زمان شروع
+                </th>
+                <th>
+                    زمان پایان
+                </th>
+                <th>
+                    تاریخ شروع
+                </th>
+                <th>
+                    تاریخ پایان
+                </th>
+                <th>
+                    بررسی
                 </th>
                 <th>
                     آب و هوا
@@ -32,7 +44,19 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CheckLocation.Description)
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Check.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Climate.Name)
@@ -53,3 +77,4 @@
 @section BottomPanel {
     <a class="btn btn-danger rounded-circle" asp-page="../Panel"><i class="fa fa-arrow-left"></i></a>
 }
+

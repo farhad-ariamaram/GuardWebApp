@@ -12,10 +12,34 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            بررسی مکان
+            زمان شروع
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LocationDetail.CheckLocation.Description)
+            @Html.DisplayFor(model => model.LocationDetail.StartTime)
+        </dd>
+        <dt class="col-sm-2">
+            زمان پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LocationDetail.EndTime)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ شروع
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LocationDetail.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LocationDetail.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+            بررسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LocationDetail.Check.Name)
         </dd>
         <dt class="col-sm-2">
             آب و هوا
@@ -33,7 +57,7 @@
 
     <form method="post">
         <input type="hidden" asp-for="LocationDetail.Id" />
-        <input type="submit" value="حذف" class="btn btn-danger" />
+        <input type="submit" value="حذف" class="btn btn-danger" /> 
         <a class="btn btn-outline-dark" asp-page="./Index">انصراف</a>
     </form>
 </div>
