@@ -71,7 +71,6 @@ namespace GuardWebApp.Controllers
         {
             try
             {
-                submittedLocation.Id = 100;
                 await _context.AddAsync(submittedLocation);
                 await _context.SaveChangesAsync();
                 return new JsonResult(true);
