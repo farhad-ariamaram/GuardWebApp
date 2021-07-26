@@ -44,6 +44,26 @@ namespace GuardWebApp.Controllers
             return new JsonResult(data);
         }
 
+        [HttpGet("getChecks")]
+        public async Task<IActionResult> getChecks()
+        {
+            var data = await _context.Checks.ToListAsync();
+            return new JsonResult(data);
+        }
+
+        [HttpGet("getClimates")]
+        public async Task<IActionResult> getClimates()
+        {
+            var data = await _context.Climates.ToListAsync();
+            return new JsonResult(data);
+        }
+
+        [HttpGet("getLocationDetails")]
+        public async Task<IActionResult> getLocationDetails()
+        {
+            var data = await _context.LocationDetails.ToListAsync();
+            return new JsonResult(data);
+        }
 
         ////////////////////////////////////////////
         [HttpPost("postSubmittedLocations")]

@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GuardWebApp
 {
@@ -21,7 +24,8 @@ namespace GuardWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter())); ;
             services.AddDbContext<GuardianDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CS")));
             services.AddSession();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -52,6 +56,20 @@ namespace GuardWebApp
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+        }
+    }
+
+    public class TimeSpanToStringConverter : JsonConverter<TimeSpan>
+    {
+        public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var value = reader.GetString();
+            return TimeSpan.Parse(value);
+        }
+
+        public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.ToString());
         }
     }
 }

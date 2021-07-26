@@ -28,7 +28,7 @@
                     محل گشت
                 </th>
                 <th>
-                    جزئیات مکان
+                    جزئیات مکان(اتوماتیک)
                 </th>
                 <th>
                     بررسی مکان
@@ -53,7 +53,7 @@
                     @Html.DisplayFor(modelItem => item.GuardArea.Description)
                 </td>
                 <td>
-                    <a target="_blank" class="btn btn-primary text-white" asp-page="../LocationDetailPage/Auto" asp-route-LocationId="@item.Id"><i class="fa fa-autoprefixer"></i></a>
+                    <a target="_blank" class="btn btn-primary text-white" asp-page="../LocationDetailPage/Auto" asp-route-LocationId="@item.Id"><i class="fa fa-directions"></i></a>
                 </td>
                 <td>
                     <a target="_blank" class="btn btn-primary text-white" asp-page="../CheckLocationPage/Index" asp-route-LocationId="@item.Id"><i class="fa fa-plus"></i>&nbsp;<i class="fa fa-edit"></i>&nbsp;<i class="fa fa-trash"></i></a>

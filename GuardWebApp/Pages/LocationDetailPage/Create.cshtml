@@ -17,7 +17,9 @@
             </div>
             <div class="form-group">
                 <label class="control-label">آب و هوا</label>
-                <select asp-for="LocationDetail.ClimateId" class="form-control" asp-items="ViewBag.ClimateId"></select>
+                <select asp-for="LocationDetail.ClimateId" class="form-control" asp-items="ViewBag.ClimateId">
+                    <option value="">خالی</option>
+                </select>
             </div>
             <div class="form-group">
                 <label class="control-label">بررسی</label>

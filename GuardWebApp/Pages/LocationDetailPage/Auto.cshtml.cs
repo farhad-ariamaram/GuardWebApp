@@ -56,21 +56,21 @@ namespace GuardWebApp.Pages.LocationDetailPage
                             await _db.AddAsync(ld);
                         }
                     }
-                    else
-                    {
-                        LocationDetail ld = new LocationDetail
-                        {
-                            CheckId = item.CheckId,
-                            ClimateId = item.ClimateId == null ? null : item.ClimateId,
-                            LocationId = LocationId.Value,
-                            StartDate = null,
-                            EndDate = null,
-                            StartTime = null,
-                            EndTime = null
-                        };
+                    //else
+                    //{
+                    //    LocationDetail ld = new LocationDetail
+                    //    {
+                    //        CheckId = item.CheckId,
+                    //        ClimateId = item.ClimateId == null ? null : item.ClimateId,
+                    //        LocationId = LocationId.Value,
+                    //        StartDate = null,
+                    //        EndDate = null,
+                    //        StartTime = null,
+                    //        EndTime = null
+                    //    };
 
-                        await _db.AddAsync(ld);
-                    }
+                    //    await _db.AddAsync(ld);
+                    //}
 
                     await _db.SaveChangesAsync();
                 }
