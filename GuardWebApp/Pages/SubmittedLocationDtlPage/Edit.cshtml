@@ -1,0 +1,46 @@
+﻿@page
+@model GuardWebApp.Pages.SubmittedLocationDtlPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<h4>ویرایش وضعیت</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SubmittedLocationDtl.Id" />
+            <div class="form-group">
+                <label class="control-label">مکان ثبت شده</label>
+                <select asp-for="SubmittedLocationDtl.SubmittedLocationId" class="form-control" asp-items="ViewBag.SubmittedLocationId"></select>
+                <span asp-validation-for="SubmittedLocationDtl.SubmittedLocationId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">جزئیات مکان</label>
+                <select asp-for="SubmittedLocationDtl.LocationDetailId" class="form-control" asp-items="ViewBag.LocationDetailId"></select>
+                <span asp-validation-for="SubmittedLocationDtl.LocationDetailId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">وضعیت اجرا</label>
+                <select asp-for="SubmittedLocationDtl.RunStatusId" class="form-control" asp-items="ViewBag.RunStatusId"></select>
+                <span asp-validation-for="SubmittedLocationDtl.RunStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @section BottomPanel {
+        <a class="btn btn-danger rounded-circle" asp-page="Index"><i class="fa fa-arrow-left"></i></a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

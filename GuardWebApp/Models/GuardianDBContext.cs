@@ -36,6 +36,7 @@ namespace GuardWebApp.Models
         public virtual DbSet<ShiftAllocation> ShiftAllocations { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<SubmittedLocation> SubmittedLocations { get; set; }
+        public virtual DbSet<SubmittedLocationDtl> SubmittedLocationDtls { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<Violation> Violations { get; set; }
@@ -48,6 +49,7 @@ namespace GuardWebApp.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=.;Database=GuardianDB;Trusted_Connection=True;");
             }
         }
@@ -391,6 +393,31 @@ namespace GuardWebApp.Models
                     .WithMany(p => p.SubmittedLocations)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_SubmittedLocation_User");
+            });
+
+            modelBuilder.Entity<SubmittedLocationDtl>(entity =>
+            {
+                entity.ToTable("SubmittedLocationDtl");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.LocationDetail)
+                    .WithMany(p => p.SubmittedLocationDtls)
+                    .HasForeignKey(d => d.LocationDetailId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SubmittedLocationDtl_LocationDetail");
+
+                entity.HasOne(d => d.RunStatus)
+                    .WithMany(p => p.SubmittedLocationDtls)
+                    .HasForeignKey(d => d.RunStatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SubmittedLocationDtl_RunStatus");
+
+                entity.HasOne(d => d.SubmittedLocation)
+                    .WithMany(p => p.SubmittedLocationDtls)
+                    .HasForeignKey(d => d.SubmittedLocationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SubmittedLocationDtl_SubmittedLocation");
             });
 
             modelBuilder.Entity<User>(entity =>

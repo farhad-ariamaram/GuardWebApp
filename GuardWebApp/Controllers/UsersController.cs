@@ -75,12 +75,29 @@ namespace GuardWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return new JsonResult(true);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 throw;
             }
             
+        }
+
+        [HttpPost("postSubmittedLocationDtls")]
+        public async Task<IActionResult> postSubmittedLocationDtls(SubmittedLocationDtl submittedLocationDtl)
+        {
+            try
+            {
+                await _context.AddAsync(submittedLocationDtl);
+                await _context.SaveChangesAsync();
+                return new JsonResult(true);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         [HttpGet("login")]

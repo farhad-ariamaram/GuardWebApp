@@ -10,11 +10,13 @@ namespace GuardWebApp.Models
         public RunStatus()
         {
             RunDetails = new HashSet<RunDetail>();
+            SubmittedLocationDtls = new HashSet<SubmittedLocationDtl>();
         }
 
         public long Id { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<RunDetail> RunDetails { get; set; }
+        public virtual ICollection<SubmittedLocationDtl> SubmittedLocationDtls { get; set; }
     }
 }

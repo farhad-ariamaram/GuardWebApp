@@ -10,6 +10,7 @@ namespace GuardWebApp.Models
         public LocationDetail()
         {
             RunDetails = new HashSet<RunDetail>();
+            SubmittedLocationDtls = new HashSet<SubmittedLocationDtl>();
         }
 
         public long Id { get; set; }
@@ -25,5 +26,6 @@ namespace GuardWebApp.Models
         public virtual Climate Climate { get; set; }
         public virtual Location Location { get; set; }
         public virtual ICollection<RunDetail> RunDetails { get; set; }
+        public virtual ICollection<SubmittedLocationDtl> SubmittedLocationDtls { get; set; }
     }
 }

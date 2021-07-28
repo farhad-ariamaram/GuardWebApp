@@ -10,6 +10,7 @@ namespace GuardWebApp.Models
         public SubmittedLocation()
         {
             Runs = new HashSet<Run>();
+            SubmittedLocationDtls = new HashSet<SubmittedLocationDtl>();
         }
 
         public long Id { get; set; }
@@ -22,5 +23,6 @@ namespace GuardWebApp.Models
         public virtual Location Location { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Run> Runs { get; set; }
+        public virtual ICollection<SubmittedLocationDtl> SubmittedLocationDtls { get; set; }
     }
 }
