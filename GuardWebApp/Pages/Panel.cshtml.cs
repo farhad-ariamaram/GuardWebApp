@@ -22,9 +22,6 @@ namespace GuardWebApp.Pages
                 return RedirectToPage("./Index");
             }
 
-            UsersController api = new UsersController(_db);
-            var a =  await api.Attend("199","199", new DateTime(2021,05,23).ToShortDateString());
-
             return Page();
         }
     }

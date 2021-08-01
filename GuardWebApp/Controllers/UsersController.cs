@@ -65,7 +65,14 @@ namespace GuardWebApp.Controllers
             return new JsonResult(data);
         }
 
-        ////////////////////////////////////////////
+        [HttpGet("getAttendant")]
+        public async Task<IActionResult> getAttendant()
+        {
+            var data = await _context.LocationDetails.ToListAsync();
+            return new JsonResult(data);
+        }
+
+        //POST//
         [HttpPost("postSubmittedLocations")]
         public async Task<IActionResult> PostSubmittedLocations(SubmittedLocation submittedLocation)
         {
@@ -75,12 +82,11 @@ namespace GuardWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return new JsonResult(true);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return new JsonResult(false);
             }
-            
+
         }
 
         [HttpPost("postSubmittedLocationDtls")]
@@ -92,10 +98,9 @@ namespace GuardWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return new JsonResult(true);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return new JsonResult(false);
             }
 
         }
@@ -282,10 +287,19 @@ namespace GuardWebApp.Controllers
             Root r = JsonConvert.DeserializeObject<Root>(result);
             List<AttendanceTime> EncryptAttendTimeList = new List<AttendanceTime>();
 
-            foreach (var item in r.d)
+            if (r.d != null)
             {
-                EncryptAttendTimeList.Add(item);
+                foreach (var item in r.d)
+                {
+                    EncryptAttendTimeList.Add(item);
+                }
             }
+            else
+            {
+                return null;
+            }
+
+
 
             List<AttendanceTime> DecryptAttendTimeList = new List<AttendanceTime>();
             foreach (var item2 in EncryptAttendTimeList)

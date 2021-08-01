@@ -32,7 +32,8 @@ namespace GuardWebApp.Pages.SubmittedLocationDtlPage
             SubmittedLocationDtl = await _context.SubmittedLocationDtls
                 .Include(s => s.LocationDetail)
                 .Include(s => s.RunStatus)
-                .Include(s => s.SubmittedLocation).ToListAsync();
+                .Include(s => s.SubmittedLocation)
+                .ToListAsync();
 
             return Page();
         }

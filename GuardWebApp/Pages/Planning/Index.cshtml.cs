@@ -111,30 +111,71 @@ namespace GuardWebApp.Pages.Planning
                         var rhythm = shiftAllocation.RhythmId;
                         long shift = 0;
                         var attendanceListAsync = await api.Attend(uid, $"{guard}", day.ToShortDateString());
-                        var attendanceList = attendanceListAsync.Value;
+
+                        List<AttendanceTime> attendanceList = null;
+                        if (attendanceListAsync != null)
+                        {
+                            attendanceList = attendanceListAsync.Value;
+                            var at = _context.Attendances.Where(a => a.DateTime == day);
+                            if (!at.Any())
+                            {
+                                Attendance attendance = new Attendance
+                                {
+                                    DateTime = day,
+                                    GuardId = guard
+                                };
+                                await _context.Attendances.AddAsync(attendance);
+                                await _context.SaveChangesAsync();
+
+                                foreach (var item in attendanceList)
+                                {
+                                    await _context.AttendanceDetails.AddAsync(new AttendanceDetail
+                                    {
+                                        AttendanceId = attendance.Id,
+                                        StartDate = DateTime.Parse(item.StartDate),
+                                        EndDate = DateTime.Parse(item.EndDate),
+                                        Leave = (item.leave == "flase" ? false : true)
+                                    });
+                                }
+                                await _context.SaveChangesAsync();
+                            }
+                            
+                        }
+                        else
+                        {
+                            continue;
+                        }
+
+
 
                         if (_context.Shifts.Where(a => a.DateTime.Month == day.Month && a.DateTime.Day == day.Day && a.GuardAreaId == guardArea && a.RhythmId == rhythm).Any())
                         {
                             shift = _context.Shifts.FirstOrDefault(a => a.DateTime.Month == day.Month && a.DateTime.Day == day.Day && a.GuardAreaId == guardArea && a.RhythmId == rhythm).Id;
                             bool flag = false;
 
-                            foreach (var attendanceTime in attendanceList)
+                            if (attendanceList != null)
                             {
-                                if (day.Month == DateTime.Parse(attendanceTime.StartDate).Month && day.Day == DateTime.Parse(attendanceTime.EndDate).Day)
+                                foreach (var attendanceTime in attendanceList)
                                 {
-                                    if (time >= new TimeSpan(DateTime.Parse(attendanceTime.StartDate).Hour, DateTime.Parse(attendanceTime.StartDate).Minute, DateTime.Parse(attendanceTime.StartDate).Second) &&
-                                    time <= new TimeSpan(DateTime.Parse(attendanceTime.EndDate).Hour, DateTime.Parse(attendanceTime.EndDate).Minute, DateTime.Parse(attendanceTime.EndDate).Second) &&
-                                    attendanceTime.leave == "false")
+                                    if (day.Month == DateTime.Parse(attendanceTime.StartDate).Month && day.Day == DateTime.Parse(attendanceTime.EndDate).Day)
                                     {
-                                        flag = true;
-                                    }
+                                        var start = new TimeSpan(DateTime.Parse(attendanceTime.StartDate).Hour, DateTime.Parse(attendanceTime.StartDate).Minute,0);
+                                        var end = new TimeSpan(DateTime.Parse(attendanceTime.EndDate).Hour, DateTime.Parse(attendanceTime.EndDate).Minute,0);
 
-                                    if (time >= new TimeSpan(DateTime.Parse(attendanceTime.StartDate).Hour, DateTime.Parse(attendanceTime.StartDate).Minute, DateTime.Parse(attendanceTime.StartDate).Second) &&
-                                    time <= new TimeSpan(DateTime.Parse(attendanceTime.EndDate).Hour, DateTime.Parse(attendanceTime.EndDate).Minute, DateTime.Parse(attendanceTime.EndDate).Second) &&
-                                    attendanceTime.leave == "true")
-                                    {
-                                        flag = false;
-                                        break;
+                                        if (time >= start &&
+                                        time <= end &&
+                                        attendanceTime.leave == "flase")
+                                        {
+                                            flag = true;
+                                        }
+
+                                        if (time >= new TimeSpan(DateTime.Parse(attendanceTime.StartDate).Hour, DateTime.Parse(attendanceTime.StartDate).Minute, DateTime.Parse(attendanceTime.StartDate).Second) &&
+                                        time <= new TimeSpan(DateTime.Parse(attendanceTime.EndDate).Hour, DateTime.Parse(attendanceTime.EndDate).Minute, DateTime.Parse(attendanceTime.EndDate).Second) &&
+                                        attendanceTime.leave == "true")
+                                        {
+                                            flag = false;
+                                            break;
+                                        }
                                     }
                                 }
                             }

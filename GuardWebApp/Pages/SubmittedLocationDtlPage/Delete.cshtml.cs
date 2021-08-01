@@ -38,7 +38,8 @@ namespace GuardWebApp.Pages.SubmittedLocationDtlPage
             SubmittedLocationDtl = await _context.SubmittedLocationDtls
                 .Include(s => s.LocationDetail)
                 .Include(s => s.RunStatus)
-                .Include(s => s.SubmittedLocation).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(s => s.SubmittedLocation)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (SubmittedLocationDtl == null)
             {
