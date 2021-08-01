@@ -24,8 +24,9 @@ namespace GuardWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddJsonOptions(options =>
-            options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter())); ;
+            services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter()));
+
             services.AddDbContext<GuardianDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CS")));
             services.AddSession();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

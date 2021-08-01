@@ -11,8 +11,7 @@ namespace GuardWebApp.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool Leave { get; set; }
-        public long AttendanceId { get; set; }
-
-        public virtual Attendance Attendance { get; set; }
+        public DateTime Date { get; set; }
+        public long GuardId { get; set; }
     }
 }

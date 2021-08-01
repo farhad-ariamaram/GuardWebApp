@@ -17,7 +17,6 @@ namespace GuardWebApp.Models
         {
         }
 
-        public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<AttendanceDetail> AttendanceDetails { get; set; }
         public virtual DbSet<Check> Checks { get; set; }
         public virtual DbSet<CheckLocation> CheckLocations { get; set; }
@@ -60,26 +59,15 @@ namespace GuardWebApp.Models
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<Attendance>(entity =>
-            {
-                entity.ToTable("Attendance");
-
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
-            });
-
             modelBuilder.Entity<AttendanceDetail>(entity =>
             {
                 entity.ToTable("AttendanceDetail");
 
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Attendance)
-                    .WithMany(p => p.AttendanceDetails)
-                    .HasForeignKey(d => d.AttendanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AttendanceDetail_Attendance");
             });
 
             modelBuilder.Entity<Check>(entity =>

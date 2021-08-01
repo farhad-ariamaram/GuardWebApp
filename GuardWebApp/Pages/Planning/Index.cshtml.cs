@@ -116,30 +116,23 @@ namespace GuardWebApp.Pages.Planning
                         if (attendanceListAsync != null)
                         {
                             attendanceList = attendanceListAsync.Value;
-                            var at = _context.Attendances.Where(a => a.DateTime == day);
+                            var at = _context.AttendanceDetails.Where(a => a.Date == day);
                             if (!at.Any())
                             {
-                                Attendance attendance = new Attendance
-                                {
-                                    DateTime = day,
-                                    GuardId = guard
-                                };
-                                await _context.Attendances.AddAsync(attendance);
-                                await _context.SaveChangesAsync();
-
                                 foreach (var item in attendanceList)
                                 {
                                     await _context.AttendanceDetails.AddAsync(new AttendanceDetail
                                     {
-                                        AttendanceId = attendance.Id,
                                         StartDate = DateTime.Parse(item.StartDate),
                                         EndDate = DateTime.Parse(item.EndDate),
-                                        Leave = (item.leave == "flase" ? false : true)
+                                        Leave = bool.Parse(item.leave),
+                                        Date = day,
+                                        GuardId = guard
                                     });
                                 }
                                 await _context.SaveChangesAsync();
                             }
-                            
+
                         }
                         else
                         {
@@ -164,7 +157,7 @@ namespace GuardWebApp.Pages.Planning
 
                                         if (time >= start &&
                                         time <= end &&
-                                        attendanceTime.leave == "flase")
+                                        attendanceTime.leave == "false")
                                         {
                                             flag = true;
                                         }

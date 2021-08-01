@@ -66,10 +66,10 @@ namespace GuardWebApp.Controllers
         }
 
         [HttpGet("getAttendant")]
-        public async Task<IActionResult> getAttendant()
+        public async Task<IActionResult> getAttendant(string uid, string datetime)
         {
-            var data = await _context.LocationDetails.ToListAsync();
-            return new JsonResult(data);
+            var t = _context.AttendanceDetails.Where(a => a.Date == DateTime.Parse(datetime) && a.GuardId == Int64.Parse(uid));
+            return new JsonResult(await t.ToListAsync());
         }
 
         //POST//
