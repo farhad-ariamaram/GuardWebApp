@@ -72,6 +72,7 @@ namespace GuardWebApp.Controllers
                                                           a.Date.Month == DateTime.Parse(datetime).Month &&
                                                           a.Date.Day == DateTime.Parse(datetime).Day &&
                                                           a.GuardId == Int64.Parse(uid));
+            var aa = t.ToList();
 
             return new JsonResult(await t.ToListAsync());
         }

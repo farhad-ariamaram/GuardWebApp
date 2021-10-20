@@ -182,11 +182,20 @@ namespace GuardWebApp.Pages.Planning
                                     ShiftId = shift,
                                     DateTime = new DateTime(2021, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds)
                                 };
-                                if (!_context.Plans.Where(a => a.UserId == guard && a.LocationId == location && a.ShiftId == shift && a.DateTime == new DateTime(1400, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds, pc)).Any())
+
+                                try
                                 {
-                                    _context.Plans.Add(plan);
-                                    _context.SaveChanges();
+                                    if (!_context.Plans.Where(a => a.UserId == guard && a.LocationId == location && a.ShiftId == shift && a.DateTime == new DateTime(1400, day.Month, day.Day, time.Hours, time.Minutes, time.Seconds, pc)).Any())
+                                    {
+                                        _context.Plans.Add(plan);
+                                        _context.SaveChanges();
+                                    }
                                 }
+                                catch (Exception ex)
+                                {
+                                    continue;
+                                }
+                                
                             }
                         }
                         //else
